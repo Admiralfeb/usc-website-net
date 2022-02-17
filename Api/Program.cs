@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Functions.Worker.Configuration;
 
-namespace UnitedSystemsCooperative.Web.Functions
+namespace UnitedSystemsCooperative.Web.Api
 {
     public class Program
     {

@@ -4,7 +4,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
-namespace UnitedSystemsCooperative.Web.Functions
+namespace UnitedSystemsCooperative.Web.Api
 {
     public class HttpTrigger1
     {
