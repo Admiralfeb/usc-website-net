@@ -6,17 +6,17 @@ using Microsoft.Extensions.Logging;
 
 namespace UnitedSystemsCooperative.Web.Api
 {
-    public class HttpTrigger1
+    public class FleetCarriersApi
     {
         private readonly ILogger _logger;
 
-        public HttpTrigger1(ILoggerFactory loggerFactory)
+        public FleetCarriersApi(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<HttpTrigger1>();
+            _logger = loggerFactory.CreateLogger<FleetCarriersApi>();
         }
 
-        [Function("HttpTrigger1")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
+        [Function("fc")]
+        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
