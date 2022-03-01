@@ -4,28 +4,27 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
-namespace UnitedSystemsCooperative.Web.Api
+namespace UnitedSystemsCooperative.Web.Api;
+
+public class AlliesApi
 {
-    public class AlliesApi
+    private readonly ILogger _logger;
+
+    public AlliesApi(ILoggerFactory loggerFactory)
     {
-        private readonly ILogger _logger;
+        _logger = loggerFactory.CreateLogger<AlliesApi>();
+    }
 
-        public AlliesApi(ILoggerFactory loggerFactory)
-        {
-            _logger = loggerFactory.CreateLogger<AlliesApi>();
-        }
+    [Function("allies")]
+    public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
+    {
+        _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-        [Function("allies")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
-        {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+        response.WriteString("Welcome to Azure Functions!");
 
-            response.WriteString("Welcome to Azure Functions!");
-
-            return response;
-        }
+        return response;
     }
 }

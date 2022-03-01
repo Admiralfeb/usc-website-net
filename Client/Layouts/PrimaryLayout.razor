@@ -1,9 +1,37 @@
 @inherits LayoutComponentBase
+@using UnitedSystemsCooperative.Web.Client.Layouts.Components
+@using MudBlazor.Utilities
 
-<div class="page">
-    <main>
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+<MudThemeProvider IsDarkMode="true" Theme="_uscTheme"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <Navbar PageType="@PageType"/>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+
+    public Type PageType { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        PageType = (Body.Target as RouteView)?.RouteData.PageType;
+        base.OnParametersSet();
+    }
+
+    // ReSharper disable once FieldCanBeMadeReadOnly.Local
+    MudTheme _uscTheme = new()
+    {
+        PaletteDark = new Palette()
+        {
+            Primary = new MudColor("#f07b05"),
+            Secondary = new MudColor("#00b3f7"),
+            TextPrimary = new MudColor("#f2f2f2")
+        },
+    };
+
+}

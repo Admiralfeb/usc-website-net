@@ -1,5 +1,9 @@
-﻿@page "/"
+@page "/"
+@inject NavigationManager _navigationManager
 
-<PageTitle>USC | Home</PageTitle>
-
-<div>herro</div>
+@code {
+    protected override void OnInitialized()
+    {
+        _navigationManager.NavigateTo("/home");
+    }
+}
