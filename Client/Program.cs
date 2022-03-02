@@ -14,3 +14,8 @@ builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(builder.Ho
 
 
 await builder.Build().RunAsync();
+
+// ReSharper disable once UnusedType.Global
+public partial class Program
+{
+}

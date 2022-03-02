@@ -1,0 +1,15 @@
+.latin{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 15px;
+    width: 400px;
+    margin: auto
+}
+
+.latin-text{
+    font-family: Cinzel serif;
+    font-size: 32px;
+}
+
