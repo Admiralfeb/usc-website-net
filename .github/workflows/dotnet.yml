@@ -43,7 +43,7 @@ jobs:
       - name: Install Playwright
         run: |
           dotnet tool update Microsoft.Playwright.CLI --tool-path ./.playwright-cli
-          ./playwright-cli/playwright install
+          ./.playwright-cli/playwright install
       - name: SonarQube Start
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
