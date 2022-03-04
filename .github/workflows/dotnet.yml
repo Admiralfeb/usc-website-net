@@ -49,7 +49,7 @@ jobs:
       - name: Build
         run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
       - name: Install Playwright
-        run: E2ETest/bin/debug/net6.0/playwright.ps1 install-deps
+        run: E2ETest/bin/Debug/net6.0/playwright.ps1 install-deps
         shell: pwsh
       - name: Publish
         run: dotnet publish --configuration Release --no-restore --version-suffix $GITHUB_RUN_NUMBER --output build
