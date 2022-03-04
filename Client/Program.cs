@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using UnitedSystemsCooperative.Web.Client;
-using UnitedSystemsCooperative.Web.Client.Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -15,7 +14,4 @@ builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(builder.Ho
 
 await builder.Build().RunAsync();
 
-// ReSharper disable once UnusedType.Global
-public partial class Program
-{
-}
+public partial class Program{}
