@@ -7,6 +7,11 @@ on:
 
 jobs:
   build:
+    name: Build and Test
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     runs-on: ubuntu-latest
 
     steps:
@@ -48,13 +53,8 @@ jobs:
         run: ./.sonar/scanner/dotnet-sonarscanner begin /k:"Admiralfeb_usc-website-net" /o:"admiralfeb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths='TestResults/*.trx' /d:sonar.cs.opencover.reportsPaths='./**/coverage.opencover.xml'
       - name: Build
         run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
-      - name: Install Playwright
-        run: E2ETest/bin/Debug/net6.0/playwright.ps1 install-deps
-        shell: pwsh
       - name: Publish
-        run: dotnet publish --configuration Release --no-restore --version-suffix $GITHUB_RUN_NUMBER --output build
-      - name: Test
-        run: dotnet test --no-build --logger trx -r TestResults --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        run: dotnet test --no-build --logger trx -r TestResults --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover Client.Test
       - name: SonarQube End
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
@@ -70,3 +70,32 @@ jobs:
           name: 'Test Results'
           path: '**/**/*.trx'
           reporter: dotnet-trx
+
+  playwright:
+    name: Playwright Tests ${{ matrix.browser }}
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: 'npm'
+      - name: Use .NET ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Install Playwright
+        run: npx playwright install --with-deps ${{ matrix.browser }} chromium
+      - name: Restore
+        run: dotnet restore
+      - name: Build
+        run: dotnet --no-restore publish -c Release -o Output /p:ContinuousIntegrationBuild=true
+      - name: Test
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- dotnet --no-build test E2ETest
