@@ -1,4 +1,4 @@
-name: .NET
+name: .NET Build, Test, Deploy
 
 on:
   push:
@@ -91,6 +91,37 @@ jobs:
       - name: Restore
         run: dotnet restore
       - name: Build
-        run: dotnet --no-restore publish -c Release -o Output /p:ContinuousIntegrationBuild=true
+        run: dotnet publish -c Release -o Output /p:ContinuousIntegrationBuild=true
       - name: Test
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- dotnet --no-build test E2ETest
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- dotnet test --logger trx -r TestResults --verbosity normal E2ETest
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: 'Test Results Playwright ${{ matrix.browser }}'
+          path: '**/**/*.trx'
+          reporter: dotnet-trx
+
+  deploy:
+    name: Deploy to Azure
+    runs-on: ubuntu-latest
+    if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || (github.base_ref == 'main' && (github.event_name == 'pull_request' && github.event.action != 'closed'))
+    needs: [build, playwright]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_DELIGHTFUL_DESERT_0E4C94510 }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "Client" # App source code path
+          api_location: "Api" # Api source code path - optional
+          output_location: "wwwroot" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
