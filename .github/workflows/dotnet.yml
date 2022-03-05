@@ -93,4 +93,11 @@ jobs:
       - name: Build
         run: dotnet publish -c Release -o Output /p:ContinuousIntegrationBuild=true
       - name: Test
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- dotnet test E2ETest
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- dotnet test --logger trx -r TestResults --verbosity normal E2ETest
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: 'Test Results Playwright'
+          path: '**/**/*.trx'
+          reporter: dotnet-trx
