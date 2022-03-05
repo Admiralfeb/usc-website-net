@@ -91,6 +91,6 @@ jobs:
       - name: Restore
         run: dotnet restore
       - name: Build
-        run: dotnet --no-restore publish -c Release -o Output /p:ContinuousIntegrationBuild=true
+        run: dotnet publish -c Release -o Output /p:ContinuousIntegrationBuild=true
       - name: Test
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- dotnet --no-build test E2ETest
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- dotnet test E2ETest --no-build
