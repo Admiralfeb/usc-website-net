@@ -98,7 +98,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: 'Test Results Playwright'
+          name: 'Test Results Playwright ${{ matrix.browser }}'
           path: '**/**/*.trx'
           reporter: dotnet-trx
 
