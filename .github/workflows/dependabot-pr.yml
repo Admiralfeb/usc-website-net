@@ -2,13 +2,13 @@ name: .NET Build, Test, Deploy
 
 on:
   push:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
 
 jobs:
   build:
     name: Build and Test
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    if: ${{ github.actor == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -70,7 +70,7 @@ jobs:
 
   playwright:
     name: Playwright Tests
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    if: ${{ github.actor == 'dependabot[bot]' }}
     strategy:
       fail-fast: false
       matrix:
@@ -107,7 +107,7 @@ jobs:
   deploy:
     name: Deploy to Azure
     runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }} && (github.ref == 'refs/heads/main' && github.event_name == 'push') || (github.base_ref == 'main' && (github.event_name == 'pull_request' && github.event.action != 'closed'))
+    if: ${{ github.actor == 'dependabot[bot]' }} && (github.ref == 'refs/heads/main' && github.event_name == 'push') || (github.base_ref == 'main' && (github.event_name == 'pull_request' && github.event.action != 'closed'))
     needs: [build, playwright]
 
     steps:
