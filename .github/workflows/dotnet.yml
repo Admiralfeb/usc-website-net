@@ -49,7 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
-        run: ./.sonar/scanner/dotnet-sonarscanner begin /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+        run: ./.sonar/scanner/dotnet-sonarscanner begin /d:sonar.projectBaseDir="${{ env.GITHUB_WORKSPACE }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
       - name: Build
         run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
       - name: Unit Test
