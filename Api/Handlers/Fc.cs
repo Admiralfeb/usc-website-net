@@ -1,8 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
+using EDCalculations.Functions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using UnitedSystemsCooperative.Web.Shared;
 
 namespace UnitedSystemsCooperative.Web.Api
 {
@@ -16,14 +20,19 @@ namespace UnitedSystemsCooperative.Web.Api
         }
 
         [Function("fc")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
+            [CosmosDBInput("usc", "fleetCarriers", ConnectionStringSetting = "CosmosConnString")] IEnumerable<FleetCarrier> carriers)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("FC get request");
+
+            var carrierswLink = carriers.Select(x =>
+            {
+                x.Link = InaraLinkBuilder.BuildFleetCarrierSearchString(x.Id);
+                return x;
+            });
 
             var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-
-            response.WriteString("Welcome to Azure Functions!");
+            await response.WriteAsJsonAsync(carrierswLink.ToList());
 
             return response;
         }

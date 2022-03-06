@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using UnitedSystemsCooperative.Web.Shared;
 
 namespace UnitedSystemsCooperative.Web.Api;
 
@@ -16,14 +19,13 @@ public class AlliesApi
     }
 
     [Function("allies")]
-    public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
+    public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
+        [CosmosDBInput("usc", "allies", ConnectionStringSetting = "CosmosConnString")] IEnumerable<Ally> allies)
     {
-        _logger.LogInformation("C# HTTP trigger function processed a request.");
+        _logger.LogInformation("Allies get request");
 
         var response = req.CreateResponse(HttpStatusCode.OK);
-        response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-
-        response.WriteString("Welcome to Azure Functions!");
+        await response.WriteAsJsonAsync(allies.ToList());
 
         return response;
     }

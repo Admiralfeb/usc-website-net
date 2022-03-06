@@ -14,7 +14,7 @@
     </ItemGroup>
     
     <ItemGroup>
-        <InternalsVisibleTo Include="E2ETest"/>
+        <InternalsVisibleTo Include="E2ETest" />
     </ItemGroup>
 
 </Project>
