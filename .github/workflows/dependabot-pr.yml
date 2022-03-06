@@ -49,7 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
-        run: ./.sonar/scanner/dotnet-sonarscanner begi /k:"Admiralfeb_usc-website-net" /o:"admiralfeb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="./**/coverage.opencover.xml" /d:sonar.projectBaseDir="${{ github.workflow }}
+        run: ./.sonar/scanner/dotnet-sonarscanner begi /k:"Admiralfeb_usc-website-net" /o:"admiralfeb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="./**/coverage.opencover.xml" /d:sonar.projectBaseDir="${{ github.workflow }}"
       - name: Build
         run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
       - name: Publish
