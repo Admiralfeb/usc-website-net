@@ -14,8 +14,6 @@
 
 ::deep .full-nav-link:hover {
     background-color: var(--mud-palette-primary);
-    
-    
 }
 
 ::deep .full-nav-link:focus {
