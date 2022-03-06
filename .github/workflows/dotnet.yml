@@ -49,10 +49,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
-        run: ./.sonar/scanner/dotnet-sonarscanner begin /k:"Admiralfeb_usc-website-net" /o:"admiralfeb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths='TestResults/*.trx' /d:sonar.cs.opencover.reportsPaths='./**/coverage.opencover.xml' /d:sonar.projectBaseDir='home/runner/work/usc-website-net/usc-website-net'
+        run: ./.sonar/scanner/dotnet-sonarscanner begin /k:"Admiralfeb_usc-website-net" /o:"admiralfeb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths='TestResults/*.trx' /d:sonar.cs.opencover.reportsPaths='./**/coverage.opencover.xml' /d:sonar.projectBaseDir='home/runner/work/usc-website-net/usc-website-net' /d:sonar.exclusions=/tmp/**/*
       - name: Build
         run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
-      - name: Publish
+      - name: Unit Test
         run: dotnet test --no-build --logger trx -r TestResults --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover Client.Test
       - name: SonarQube End
         env:
