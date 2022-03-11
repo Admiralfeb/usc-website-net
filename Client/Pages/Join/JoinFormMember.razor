@@ -1,0 +1,39 @@
+@page "/join/member"
+@using UnitedSystemsCooperative.Web.Shared.JoinRequest
+@using UnitedSystemsCooperative.Web.Shared
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudText Typo="Typo.h3" Align="Align.Center">Join as a Member</MudText>
+    <MudPaper Class="pa-2">
+        <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator/>
+
+            
+            <MudTextField T="string" Label="Cmdr Name" @bind-value="model.CmdrName" For="@(()=>model.CmdrName)"/>
+            <MudTextField T="string" Label="Discord Name" @bind-value="model.DiscordName" HelperText="{username}#0000" For="@(()=>model.DiscordName)" />
+            <MudRadioGroup @bind-SelectedOption="model.Platform" For="@(()=>model.Platform)">
+                <MudRadio Option="PlatformType.PC" Color="Color.Primary">PC</MudRadio>
+                <MudRadio Option="PlatformType.Xbox" Color="Color.Primary">Xbox</MudRadio>
+                <MudRadio Option="PlatformType.PS" Color="Color.Primary">PlayStation</MudRadio>
+            </MudRadioGroup>
+            @* Playing Length *@
+            @* Referral *@
+            @* Region *@
+            @* Rules *@
+            <MudCheckBox @bind-Checked="model.AcceptsRules" Color="Color.Primary" Label="Accept Rules"></MudCheckBox>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary">Submit</MudButton>
+        </EditForm>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    MemberJoinRequest model = new();
+    bool success;
+
+    private void OnValidSubmit(EditContext context)
+    {
+        success = true;
+        StateHasChanged();
+    }
+
+}
