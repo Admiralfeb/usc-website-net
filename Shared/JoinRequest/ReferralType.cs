@@ -24,4 +24,5 @@ public enum ReferralType
     Reddit,
     [Description("Other - please explain")]
     Other,
+    Unknown,
 }

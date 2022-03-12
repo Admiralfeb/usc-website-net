@@ -7,20 +7,38 @@
     <MudPaper Class="pa-2">
         <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator/>
-
+            <ValidationSummary/>
             
-            <MudTextField T="string" Label="Cmdr Name" @bind-value="model.CmdrName" For="@(()=>model.CmdrName)"/>
-            <MudTextField T="string" Label="Discord Name" @bind-value="model.DiscordName" HelperText="{username}#0000" For="@(()=>model.DiscordName)" />
-            <MudRadioGroup @bind-SelectedOption="model.Platform" For="@(()=>model.Platform)">
-                <MudRadio Option="PlatformType.PC" Color="Color.Primary">PC</MudRadio>
-                <MudRadio Option="PlatformType.Xbox" Color="Color.Primary">Xbox</MudRadio>
-                <MudRadio Option="PlatformType.PS" Color="Color.Primary">PlayStation</MudRadio>
-            </MudRadioGroup>
+            <JoinCmdrName TJoinItem="MemberJoinRequest" Model="model" @bind-CmdrName="model.CmdrName"></JoinCmdrName>
+            
+            @* <JoinQuestionBox Question="Please enter your in-game CMDR name"> *@
+            @*     <MudTextField T="string" Label="CMDR Name" @bind-value="model.CmdrName" For="@(() => model.CmdrName)"/> *@
+            @* </JoinQuestionBox> *@
+            <JoinQuestionBox Question="Please enter your discord name in format: {username}#0000">
+                <MudTextField T="string" Label="Discord Name" @bind-value="model.DiscordName" HelperText="{username}#0000" For="@(() => model.DiscordName)"/>
+            </JoinQuestionBox>
+            <JoinQuestionBox Question="Which platform do you primarily play on?">
+                <MudRadioGroup @bind-SelectedOption="model.Platform" For="@(() => model.Platform)" Class="text-center">
+                    <MudRadio Option="PlatformType.PC" Color="Color.Primary">@PlatformType.PC.ToDescriptionString()</MudRadio>
+                    <MudRadio Option="PlatformType.Xbox" Color="Color.Primary">@PlatformType.Xbox.ToDescriptionString()</MudRadio>
+                    <MudRadio Option="PlatformType.PS" Color="Color.Primary">@PlatformType.PS.ToDescriptionString()</MudRadio>
+                </MudRadioGroup>
+            </JoinQuestionBox>
             @* Playing Length *@
+            <JoinQuestionBox Question="How long have you been playing?">
+                <MudRadioGroup @bind-SelectedOption="model.PlayingLength" For="@(() => model.PlayingLength)" Class="text-center">
+                    <MudRadio Option="PlayingLengthType.LessThanMonth" Color="Color.Primary">@PlayingLengthType.LessThanMonth.ToDescriptionString()</MudRadio>
+                    <MudRadio Option="PlayingLengthType.MoreThanMonth" Color="Color.Primary">@PlayingLengthType.MoreThanMonth.ToDescriptionString()</MudRadio>
+                    <MudRadio Option="PlayingLengthType.MoreThan6Months" Color="Color.Primary">@PlayingLengthType.MoreThan6Months.ToDescriptionString()</MudRadio>
+                    <MudRadio Option="PlayingLengthType.MoreThanYear" Color="Color.Primary">@PlayingLengthType.MoreThanYear.ToDescriptionString()</MudRadio>
+                </MudRadioGroup>
+            </JoinQuestionBox>
             @* Referral *@
             @* Region *@
-            @* Rules *@
-            <MudCheckBox @bind-Checked="model.AcceptsRules" Color="Color.Primary" Label="Accept Rules"></MudCheckBox>
+            <JoinQuestionBox>
+                <MudText>Do you agree to follow our <MudLink Href="/about/rules" Target="_blank">rules</MudLink>?</MudText>
+                <MudCheckBox @bind-Checked="model.AcceptsRules" Color="Color.Primary" Label="Accept Rules"></MudCheckBox>
+            </JoinQuestionBox>
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary">Submit</MudButton>
         </EditForm>
     </MudPaper>

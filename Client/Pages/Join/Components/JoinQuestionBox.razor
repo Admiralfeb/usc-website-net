@@ -1,0 +1,17 @@
+<div class="question-box mx-0 my-1 pa-2">
+    <MudText>@Question</MudText>
+    @ChildContent
+</div>
+
+@code {
+
+    [Parameter]
+    public string Question { get; set; } = string.Empty;
+
+    [Parameter]
+    public string ErrorMessage { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+}

@@ -1,0 +1,32 @@
+@using UnitedSystemsCooperative.Web.Shared.JoinRequest
+
+@typeparam TJoinItem where TJoinItem : JoinRequestBase
+
+<JoinQuestionBox Question="Please enter your in-game CMDR name">
+    <MudTextField T="string" Label="CMDR Name" @bind-Value="@cmdrName" For="@(() => Model.CmdrName)"/>
+</JoinQuestionBox>
+
+@code {
+    private string? cmdrName;
+
+    [CascadingParameter]
+    public EditContext? EditContext { get; set; }
+
+    [Parameter]
+    public string CmdrName { get; set; }
+
+    [Parameter]
+    public EventCallback<string> CmdrNameChanged { get; set; }
+
+    [Parameter]
+    public TJoinItem Model { get; set; }
+
+    private async Task UpdateCmdrName(ChangeEventArgs e)
+    {
+        cmdrName = e?.Value?.ToString();
+
+        await CmdrNameChanged.InvokeAsync(cmdrName);
+    }
+
+
+}
