@@ -3,7 +3,7 @@
 @typeparam TJoinItem where TJoinItem : JoinRequestBase
 
 <JoinQuestionBox Question="Please enter your in-game CMDR name">
-    <MudTextField T="string" Label="CMDR Name" @bind-Value="@cmdrName" For="@(() => Model.CmdrName)"/>
+    <MudTextField T="string" Label="CMDR Name" @bind-Value="@CmdrName" For="@(() => Model.CmdrName)"/>
 </JoinQuestionBox>
 
 @code {

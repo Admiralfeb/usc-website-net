@@ -16,9 +16,11 @@ public abstract class JoinRequestBase
         ErrorMessage = "Please select an option.")]
     public PlatformType Platform { get; set; } = PlatformType.Unknown;
 
-    public RegionType? Region { get; set; }
+    [Required, EnumDataType(typeof(RegionType))]
+    [Range(typeof(RegionType), nameof(RegionType.N_CAmerica), nameof(RegionType.Asia_Pacific),
+        ErrorMessage = "Please select an option.")]
+    public RegionType Region { get; set; } = RegionType.Unknown;
 
-    [Required]
     [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept our rules to continue.")]
     public bool AcceptsRules { get; set; }
 }
