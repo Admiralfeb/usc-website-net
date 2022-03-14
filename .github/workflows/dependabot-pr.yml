@@ -52,7 +52,7 @@ jobs:
         run: ./.sonar/scanner/dotnet-sonarscanner begin /k:"Admiralfeb_usc-website-net" /o:"admiralfeb" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="./**/coverage.opencover.xml" /d:sonar.projectBaseDir="${{ github.workspace }}"
       - name: Build
         run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
-      - name: Publish
+      - name: Unit Test
         run: dotnet test ./Client.Test --no-build --logger trx -r TestResults --verbosity normal --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
       - name: SonarQube End
         env:
@@ -69,7 +69,7 @@ jobs:
           name: 'Test Results'
           path: '**/**/*.trx'
           reporter: dotnet-trx
-  
+
   build_for_playwright:
     name: Build for Playwright
     if: ${{ github.actor == 'dependabot[bot]' }}
@@ -92,6 +92,7 @@ jobs:
           path: Output
           key: ${{ runner.os }}-cache-build
 
+
   playwright:
     name: Playwright Tests
     strategy:
@@ -111,7 +112,7 @@ jobs:
       - name: Use .NET ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 6.0.x        
       - name: Install Playwright
         run: npx playwright install --with-deps ${{ matrix.browser }} chromium
       - name: Restore
