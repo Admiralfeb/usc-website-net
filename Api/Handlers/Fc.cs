@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using EDCalculations.Functions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using UnitedSystemsCooperative.Utils.EDCalc.Functions;
 using UnitedSystemsCooperative.Web.Shared;
 
-namespace UnitedSystemsCooperative.Web.Api
+namespace UnitedSystemsCooperative.Web.Api.Handlers
 {
     public class FleetCarriersApi
     {
