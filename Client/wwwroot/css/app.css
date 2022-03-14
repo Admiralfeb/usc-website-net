@@ -11,3 +11,7 @@ body {
 .text-center {
     text-align: center;
 }
+
+.validation-message {
+    color: var(--mud-palette-error);
+}

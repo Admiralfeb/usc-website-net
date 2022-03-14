@@ -2,7 +2,6 @@
 @using Microsoft.Extensions.Options
 @using System.Text.Json
 @inject IConfiguration _configuration
-@* @inject AppSettings _appSettings *@
 
 <MudBreakpointProvider>
     <MudText>Current: @PageType?.ToString().Replace("UnitedSystemsCooperative.Web.Client.Pages.", "")</MudText>
@@ -26,19 +25,3 @@
         </MudAppBar>
     </MudHidden>
 </MudBreakpointProvider>
-
-@code {
-
-    [Parameter]
-    public Type? PageType { get; set; }
-
-    private NavItem[]? NavItems { get; set; }
-
-    protected override void OnInitialized()
-    {
-        NavItems = _configuration.GetSection("NavItems").Get<NavItem[]>();
-
-        base.OnInitialized();
-    }
-
-}
