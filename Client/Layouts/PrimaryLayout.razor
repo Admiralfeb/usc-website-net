@@ -1,5 +1,4 @@
 @inherits LayoutComponentBase
-@using UnitedSystemsCooperative.Web.Client.Layouts.Components
 
 <MudThemeProvider IsDarkMode="true" Theme="_uscTheme"/>
 <MudDialogProvider/>
@@ -11,3 +10,17 @@
         @Body
     </MudMainContent>
 </MudLayout>
+
+@code {
+
+    public Type PageType { get; set; }
+    // ReSharper disable once FieldCanBeMadeReadOnly.Local
+    MudTheme _uscTheme = UscTheme.Theme;
+
+    protected override void OnParametersSet()
+    {
+        PageType = (Body.Target as RouteView)?.RouteData.PageType;
+        base.OnParametersSet();
+    }
+
+}

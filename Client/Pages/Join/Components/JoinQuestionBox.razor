@@ -3,3 +3,16 @@
     @ChildContent
     <MudText Color="Color.Error">@ErrorMessage</MudText>
 </div>
+
+@code{
+
+    [Parameter]
+    public string Question { get; set; } = string.Empty;
+
+    [Parameter]
+    public string ErrorMessage { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+}

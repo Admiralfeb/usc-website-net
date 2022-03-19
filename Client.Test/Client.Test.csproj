@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -24,7 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\Client.csproj" />
+    <ProjectReference Include="..\Client\Client.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Fakes"/>
+    <Folder Include="Layouts"/>
   </ItemGroup>
 
 </Project>
