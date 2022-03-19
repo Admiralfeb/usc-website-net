@@ -1,6 +1,4 @@
 @using UnitedSystemsCooperative.Web.Client.Models
-@using Microsoft.Extensions.Options
-@using System.Text.Json
 @inject IConfiguration _configuration
 
 <MudBreakpointProvider>
@@ -25,3 +23,19 @@
         </MudAppBar>
     </MudHidden>
 </MudBreakpointProvider>
+
+@code {
+
+    [Parameter]
+    public Type? PageType { get; set; }
+
+    private NavItem[]? NavItems { get; set; }
+
+    protected override void OnInitialized()
+    {
+        NavItems = _configuration.GetSection("NavItems").Get<NavItem[]>();
+
+        base.OnInitialized();
+    }
+
+}
