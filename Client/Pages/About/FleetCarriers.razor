@@ -1,3 +1,38 @@
 @page "/about/fc"
+@using UnitedSystemsCooperative.Web.Shared
+@inject HttpClient _http
 
-<UnderConstruction Title="Fleet Carriers"/>
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <FCSquad Carriers="@_squadCarriers" IsLoading="@isLoading"/>
+    <FCPersonal Carriers="_personalCarriers" IsLoading="@isLoading"/>
+</MudContainer>
+
+@code {
+    private bool isLoading = false;
+    private FleetCarrier[] _personalCarriers = Array.Empty<FleetCarrier>();
+    private FleetCarrier[] _squadCarriers = Array.Empty<FleetCarrier>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            isLoading = true;
+            var fleetCarriers = await _http.GetFromJsonAsync<FleetCarrier[]>("api/fc/get");
+            if (fleetCarriers == null)
+                return;
+            _personalCarriers = fleetCarriers
+                .Where(x => string.IsNullOrEmpty(x.Purpose))
+                .OrderBy(x => x.Name)
+                .ToArray();
+            _squadCarriers = fleetCarriers
+                .Where(x => !string.IsNullOrEmpty(x.Purpose))
+                .OrderBy(x => x.Name)
+                .ToArray();
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+}

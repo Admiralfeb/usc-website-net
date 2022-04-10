@@ -1,3 +1,49 @@
 @page "/about/allies"
+@using UnitedSystemsCooperative.Web.Shared
+@inject HttpClient _http
 
-<UnderConstruction Title="Allies"/>
+<MudContainer MaxWidth="MaxWidth.ExtraSmall">
+    <MudText Typo="Typo.h4" Align="Align.Center">Allies</MudText>
+    @if (_isLoading)
+    {
+        <div>Loading allies</div>
+    }
+    else
+    {
+        <MudPaper>
+            @if (_allies == null)
+            {
+                <div>No allies found</div>
+            }
+            else
+            {
+                <MudList>
+                    @foreach (var ally in _allies)
+                    {
+                        <MudListItem Text="@ally.Name"/>
+                    }
+                </MudList>
+            }
+        </MudPaper>
+    }
+
+</MudContainer>
+
+@code {
+    private bool _isLoading = false;
+    private Ally[]? _allies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _isLoading = true;
+            _allies = await _http.GetFromJsonAsync<Ally[]>("api/allies/get");
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+}

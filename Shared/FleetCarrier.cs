@@ -1,10 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+using UnitedSystemsCooperative.Web.Shared.FormValidators;
+
 namespace UnitedSystemsCooperative.Web.Shared;
 
 public class FleetCarrier
 {
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public string Owner { get; set; }
+    [Required] [FleetCarrierValidator] public string Id { get; set; }
+
+    [Required] public string Name { get; set; }
+
+    [Required] public string Owner { get; set; }
+
+    public string OwnerId { get; set; }
     public string Purpose { get; set; } = string.Empty;
     public string Link { get; set; } = string.Empty;
 }

@@ -13,9 +13,8 @@ builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(builder.Ho
 
 builder.Services.AddOidcAuthentication(options =>
 {
-    // Configure your authentication provider options here.
-    // For more information, see https://aka.ms/blazor-standalone-auth
-    builder.Configuration.Bind("Local", options.ProviderOptions);
+    builder.Configuration.Bind("Auth0", options.ProviderOptions);
+    options.ProviderOptions.ResponseType = "code";
 });
 
 await builder.Build().RunAsync();

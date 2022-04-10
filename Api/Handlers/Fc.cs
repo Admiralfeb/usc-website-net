@@ -19,9 +19,10 @@ namespace UnitedSystemsCooperative.Web.Api.Handlers
             _logger = loggerFactory.CreateLogger<FleetCarriersApi>();
         }
 
-        [Function("fc")]
+        [Function("fc/get")]
         public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
-            [CosmosDBInput("usc", "fleetCarriers", ConnectionStringSetting = "CosmosConnString")] IEnumerable<FleetCarrier> carriers)
+            [CosmosDBInput("usc", "fleetCarriers", ConnectionStringSetting = "CosmosConnString")]
+            IEnumerable<FleetCarrier> carriers)
         {
             _logger.LogInformation("FC get request");
 

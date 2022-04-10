@@ -1,0 +1,14 @@
+@using UnitedSystemsCooperative.Web.Shared
+
+<MudTd>@carrier?.Name</MudTd>
+<MudTd>
+    <MudLink Href="@carrier?.Link" Target="_blank">@carrier?.Id</MudLink>
+</MudTd>
+<MudTd>@carrier?.Owner</MudTd>
+
+@code {
+
+    [Parameter]
+    public FleetCarrier? carrier { get; set; }
+
+}
