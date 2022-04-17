@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
+using UnitedSystemsCooperative.Web.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+#if DEBUG
+builder.Configuration.AddJsonFile("appsettings.local.json");
+var azureIdentity = new AzureIdentityConfig();
+builder.Configuration.Bind("AzureIdentity", azureIdentity);
+Environment.SetEnvironmentVariable("AZURE_TENANT_ID", azureIdentity.TenantId);
+Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", azureIdentity.ClientId);
+Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", azureIdentity.ClientSecret);
+#endif
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Test", "Client.Test\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E2ETest", "E2ETest\E2ETest.csproj", "{178F2396-5526-4F98-9242-7505AB9457A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OidcApiAuthorization", "OidcApiAuthorization\OidcApiAuthorization.csproj", "{0C05869E-E56A-4084-9D96-483029708C4F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{BF329F08-B281-4370-986C-3EC7D41FCD9A}"
 EndProject
 Global
@@ -40,10 +38,6 @@ Global
 		{178F2396-5526-4F98-9242-7505AB9457A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{178F2396-5526-4F98-9242-7505AB9457A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{178F2396-5526-4F98-9242-7505AB9457A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C05869E-E56A-4084-9D96-483029708C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C05869E-E56A-4084-9D96-483029708C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C05869E-E56A-4084-9D96-483029708C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C05869E-E56A-4084-9D96-483029708C4F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF329F08-B281-4370-986C-3EC7D41FCD9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF329F08-B281-4370-986C-3EC7D41FCD9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF329F08-B281-4370-986C-3EC7D41FCD9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
