@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{342B80C3-701E-4B9C-BE21-13B778F4A0E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{FD7D4CE1-5FEF-4F2E-BF38-E6E80B6ECA1A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Test", "Client.Test\Client.Test.csproj", "{9B928E7F-34C4-43F9-AC68-EBCBB7C3E8B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E2ETest", "E2ETest\E2ETest.csproj", "{178F2396-5526-4F98-9242-7505AB9457A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OidcApiAuthorization", "OidcApiAuthorization\OidcApiAuthorization.csproj", "{0C05869E-E56A-4084-9D96-483029708C4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{BF329F08-B281-4370-986C-3EC7D41FCD9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,6 @@ Global
 		{342B80C3-701E-4B9C-BE21-13B778F4A0E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{342B80C3-701E-4B9C-BE21-13B778F4A0E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{342B80C3-701E-4B9C-BE21-13B778F4A0E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD7D4CE1-5FEF-4F2E-BF38-E6E80B6ECA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD7D4CE1-5FEF-4F2E-BF38-E6E80B6ECA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD7D4CE1-5FEF-4F2E-BF38-E6E80B6ECA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD7D4CE1-5FEF-4F2E-BF38-E6E80B6ECA1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9B928E7F-34C4-43F9-AC68-EBCBB7C3E8B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B928E7F-34C4-43F9-AC68-EBCBB7C3E8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B928E7F-34C4-43F9-AC68-EBCBB7C3E8B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,5 +44,9 @@ Global
 		{0C05869E-E56A-4084-9D96-483029708C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C05869E-E56A-4084-9D96-483029708C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C05869E-E56A-4084-9D96-483029708C4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF329F08-B281-4370-986C-3EC7D41FCD9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF329F08-B281-4370-986C-3EC7D41FCD9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF329F08-B281-4370-986C-3EC7D41FCD9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF329F08-B281-4370-986C-3EC7D41FCD9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
