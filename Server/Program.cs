@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
 using UnitedSystemsCooperative.Web.Server;
+using UnitedSystemsCooperative.Web.Server.Interfaces;
+using UnitedSystemsCooperative.Web.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<IDatabaseService, CosmosDbService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
     {

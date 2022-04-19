@@ -38,7 +38,7 @@
         try
         {
             _isLoading = true;
-            _allies = await _http.GetFromJsonAsync<Ally[]>("api/allies/get");
+            _allies = await _http.GetFromJsonAsync<Ally[]>("api/ally");
         }
         finally
         {

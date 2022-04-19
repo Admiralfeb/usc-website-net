@@ -6,11 +6,13 @@ namespace UnitedSystemsCooperative.Web.Server.Services;
 public class CosmosDbService : IDatabaseService
 {
     private readonly CosmosClient _cosmosClient;
+    private readonly string _dbId;
 
     public CosmosDbService(IConfiguration config)
     {
         var connectionString = config["CosmosConnString"];
         _cosmosClient = new CosmosClient(connectionString);
+        _dbId = config["DatabaseId"];
     }
 
     public Task InsertItem<T>(string collectionName, T itemToInsert)
@@ -28,12 +30,37 @@ public class CosmosDbService : IDatabaseService
         throw new NotImplementedException();
     }
 
-    public Task<T[]> GetItems<T>(string collectionName, string? sortField, SortOrder? sortOrder)
+    public async Task<T[]> GetItemsAsync<T>(string collectionName, string? sortField, SortOrder? sortOrder = SortOrder.Ascending)
     {
-        throw new NotImplementedException();
+        string sqlQueryText = "SELECT * from c";
+        if (!string.IsNullOrEmpty(sortField))
+        {
+            sqlQueryText += $" ORDERBY c.{sortField}";
+            var direction = sortOrder switch
+            {
+                SortOrder.Ascending => "ASC",
+                SortOrder.Descending => "DESC",
+                _ => throw new ArgumentOutOfRangeException(nameof(sortOrder), sortOrder, null)
+            };
+            sqlQueryText += $" {direction}";
+        }
+        var sqlQuery = new QueryDefinition(sqlQueryText);
+        var container = _cosmosClient.GetContainer(_dbId, collectionName);
+
+        using var queryResultSetIterator = container.GetItemQueryIterator<T>(sqlQuery);
+
+        List<T> items = new();
+
+        while (queryResultSetIterator.HasMoreResults)
+        {
+            var currentResult = await queryResultSetIterator.ReadNextAsync();
+            items.AddRange(currentResult);
+        }
+
+        return items.ToArray();
     }
 
-    public Task<T[]> GetItems<T>(string collectionName, string query, string? sortField, SortOrder? sortOrder)
+    public Task<T[]> GetItemsAsync<T>(string collectionName, string query, string? sortField, SortOrder? sortOrder)
     {
         throw new NotImplementedException();
     }
