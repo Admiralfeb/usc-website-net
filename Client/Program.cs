@@ -12,12 +12,14 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 // builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)});
 
-builder.Services.AddHttpClient("ServerApi",
+builder.Services.AddHttpClient("WebApi",
         client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+builder.Services.AddHttpClient(Constants.NoAuthHttpClientName,
+        client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-    .CreateClient("ServerApi"));
+    .CreateClient("WebApi"));
 
 builder.Services.AddOidcAuthentication(options =>
 {

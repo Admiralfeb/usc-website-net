@@ -1,6 +1,6 @@
 @page "/about/allies"
 @using UnitedSystemsCooperative.Web.Shared
-@inject HttpClient _http
+@inject IHttpClientFactory ClientFactory
 
 <MudContainer MaxWidth="MaxWidth.ExtraSmall">
     <MudText Typo="Typo.h4" Align="Align.Center">Allies</MudText>
@@ -38,7 +38,8 @@
         try
         {
             _isLoading = true;
-            _allies = await _http.GetFromJsonAsync<Ally[]>("api/ally");
+            var client = ClientFactory.CreateClient(Constants.NoAuthHttpClientName);
+            _allies = await client.GetFromJsonAsync<Ally[]>("/api/ally");
         }
         finally
         {

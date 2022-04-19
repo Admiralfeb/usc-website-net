@@ -1,0 +1,6 @@
+namespace UnitedSystemsCooperative.Web.Client;
+
+public static class Constants
+{
+    public const string NoAuthHttpClientName = "WebApi.NoAuth";
+}

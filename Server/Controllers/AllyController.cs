@@ -7,7 +7,7 @@ namespace UnitedSystemsCooperative.Web.Server.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class AllyController : ControllerBase
 {
     private IDatabaseService _db;
@@ -15,7 +15,7 @@ public class AllyController : ControllerBase
     {
         _db = dbService;
     }
-    
+
     [HttpPost]
     public async Task<bool> CreateAlly([FromBody] Ally ally)
     {
@@ -26,7 +26,7 @@ public class AllyController : ControllerBase
     [HttpGet]
     public async Task<Ally[]> GetAllies()
     {
-        var results = await _db.GetItemsAsync<Ally>("ally", "name", SortOrder.Ascending);
+        var results = await _db.GetItemsAsync<Ally>("allies", "name", SortOrder.Ascending);
         return results;
     }
 

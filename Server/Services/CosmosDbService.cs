@@ -35,7 +35,7 @@ public class CosmosDbService : IDatabaseService
         string sqlQueryText = "SELECT * from c";
         if (!string.IsNullOrEmpty(sortField))
         {
-            sqlQueryText += $" ORDERBY c.{sortField}";
+            sqlQueryText += $" ORDER BY c.{sortField}";
             var direction = sortOrder switch
             {
                 SortOrder.Ascending => "ASC",

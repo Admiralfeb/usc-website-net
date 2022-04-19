@@ -28,10 +28,15 @@ Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", azureIdentity.ClientId);
 Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", azureIdentity.ClientSecret);
 #endif
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+app.UseSwagger();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -58,5 +63,7 @@ app.UseAuthorization();
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+
+app.UseSwaggerUI();
 
 app.Run();
