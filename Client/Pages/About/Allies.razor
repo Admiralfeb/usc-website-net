@@ -1,6 +1,8 @@
 @page "/about/allies"
 @using UnitedSystemsCooperative.Web.Shared
+@using UnitedSystemsCooperative.Web.Client.Services
 @inject IHttpClientFactory ClientFactory
+@inject AllyService Service
 
 <MudContainer MaxWidth="MaxWidth.ExtraSmall">
     <MudText Typo="Typo.h4" Align="Align.Center">Allies</MudText>
@@ -30,16 +32,16 @@
 </MudContainer>
 
 @code {
-    private bool _isLoading = false;
+    private bool _isLoading;
     private Ally[]? _allies;
 
     protected override async Task OnInitializedAsync()
     {
+        _allies = Service.GetFromStore().ToArray();
         try
         {
             _isLoading = true;
-            var client = ClientFactory.CreateClient(Constants.NoAuthHttpClientName);
-            _allies = await client.GetFromJsonAsync<Ally[]>("/api/ally");
+            _allies = (await Service.GetFromServer()).ToArray();
         }
         finally
         {

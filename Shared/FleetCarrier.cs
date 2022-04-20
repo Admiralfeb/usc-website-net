@@ -3,9 +3,9 @@ using UnitedSystemsCooperative.Web.Shared.FormValidators;
 
 namespace UnitedSystemsCooperative.Web.Shared;
 
-public class FleetCarrier
+public class FleetCarrier : DbItem
 {
-    [Required] [FleetCarrierValidator] public string Id { get; set; }
+    [Required] [FleetCarrierValidator] public override string Id { get; set; }
 
     [Required] public string Name { get; set; }
 

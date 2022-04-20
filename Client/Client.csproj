@@ -19,11 +19,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="E2ETest" />
+        <InternalsVisibleTo Include="E2ETest"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Shared\Shared.csproj" />
+        <ProjectReference Include="..\Shared\Shared.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Interfaces"/>
     </ItemGroup>
 
 </Project>

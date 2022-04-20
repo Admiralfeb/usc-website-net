@@ -2,9 +2,7 @@
 
 namespace UnitedSystemsCooperative.Web.Shared;
 
-public class Ally
+public class Ally : DbItem
 {
-    public string Id { get; set; }
-
     [Required] public string Name { get; set; }
 }

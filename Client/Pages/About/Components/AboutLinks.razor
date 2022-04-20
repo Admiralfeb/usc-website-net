@@ -1,5 +1,5 @@
 @using UnitedSystemsCooperative.Web.Client.Models
-@inject IConfiguration _configuration
+@inject IConfiguration Configuration
 
 <MudContainer MaxWidth="MaxWidth.Medium" Class="pa-2 mb-2" Style="text-align: center; width: fit-content; margin: auto">
     <MudPaper>
@@ -26,12 +26,12 @@
 
 @code{
 
-    private AboutLayoutButtonInfo[]? _buttons;
+    private AboutLayoutButtonInfo[] _buttons = Array.Empty<AboutLayoutButtonInfo>();
 
     protected override void OnInitialized()
     {
-        _buttons = _configuration.GetSection(AboutLayoutButtonInfo.SettingName).Get<AboutLayoutButtonInfo[]>();
-        var uscLinks = _configuration.GetSection(UscLink.SettingName).Get<UscLink[]>();
+        _buttons = Configuration.GetSection(AboutLayoutButtonInfo.SettingName).Get<AboutLayoutButtonInfo[]>();
+        var uscLinks = Configuration.GetSection(UscLink.SettingName).Get<UscLink[]>();
         _buttons = _buttons.Select(x =>
         {
             if (!x.Link.Contains('{')) return x;

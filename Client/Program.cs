@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using UnitedSystemsCooperative.Web.Client;
+using UnitedSystemsCooperative.Web.Client.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -10,16 +11,18 @@ builder.Services.AddMudServices();
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)});
-
-builder.Services.AddHttpClient("WebApi",
+builder.Services.AddHttpClient(Constants.DefaultHttpClientName,
         client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-builder.Services.AddHttpClient(Constants.NoAuthHttpClientName,
-        client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
-
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-    .CreateClient("WebApi"));
+    .CreateClient(Constants.DefaultHttpClientName));
+
+builder.Services.AddHttpClient(Constants.NoAuthHttpClientName,
+    client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+
+builder.Services.AddSingleton<ApiService>();
+builder.Services.AddSingleton<StateService>();
+builder.Services.AddSingleton<AllyService>();
 
 builder.Services.AddOidcAuthentication(options =>
 {
