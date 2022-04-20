@@ -1,5 +1,3 @@
-using UnitedSystemsCooperative.Web.Shared;
-
 namespace UnitedSystemsCooperative.Web.Client.Services;
 
 public abstract class BaseItemService
@@ -12,7 +10,4 @@ public abstract class BaseItemService
         Api = api;
         State = state;
     }
-
-    public abstract IEnumerable<DbItem> GetFromStore();
-    public abstract Task<IEnumerable<DbItem>> GetFromServer();
 }

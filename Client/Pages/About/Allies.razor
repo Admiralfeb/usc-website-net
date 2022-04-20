@@ -1,8 +1,7 @@
 @page "/about/allies"
 @using UnitedSystemsCooperative.Web.Shared
-@using UnitedSystemsCooperative.Web.Client.Services
-@inject IHttpClientFactory ClientFactory
-@inject AllyService Service
+@using UnitedSystemsCooperative.Web.Client.Interfaces
+@inject IItemService<Ally> Service
 
 <MudContainer MaxWidth="MaxWidth.ExtraSmall">
     <MudText Typo="Typo.h4" Align="Align.Center">Allies</MudText>
@@ -40,7 +39,8 @@
         _allies = Service.GetFromStore().ToArray();
         try
         {
-            _isLoading = true;
+            if (_allies == null)
+                _isLoading = true;
             _allies = (await Service.GetFromServer()).ToArray();
         }
         finally
