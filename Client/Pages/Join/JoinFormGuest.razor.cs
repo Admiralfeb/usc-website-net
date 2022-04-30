@@ -5,11 +5,12 @@ using UnitedSystemsCooperative.Web.Shared.JoinRequest;
 namespace UnitedSystemsCooperative.Web.Client.Pages.Join;
 
 // ReSharper disable once ClassNeverInstantiated.Global
-public partial class JoinFormMember
+public partial class JoinFormGuest
 {
     private EditContext? _editContext;
     private string _referralQuestion = string.Empty;
-    private MemberJoinRequest model = new();
+    private GuestJoinRequest model = new();
+
 
     protected override void OnInitialized()
     {

@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
-using UnitedSystemsCooperative.Web.Shared.Interfaces;
+using UnitedSystemsCooperative.Web.Shared.JoinRequest;
 
-namespace UnitedSystemsCooperative.Web.Shared.JoinRequest;
+namespace UnitedSystemsCooperative.Web.Shared.Interfaces;
 
-public class GuestJoinRequest : JoinRequestBase, IJoinRequestReferral
+public interface IJoinRequestReferral
 {
     [Required]
     [Range(typeof(ReferralType), nameof(ReferralType.USI), nameof(ReferralType.Other),
         ErrorMessage = "Please select an option")]
-    public ReferralType Referral { get; set; } = ReferralType.Unknown;
+    public ReferralType Referral { get; set; }
 
     public string? ReferralDescribe { get; set; }
 }

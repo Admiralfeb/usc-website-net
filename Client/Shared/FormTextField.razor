@@ -1,7 +1,7 @@
 @using System.Linq.Expressions
 @inherits InputBase<string>
 
-<MudTextField T="string" id="@Id" @bind="@CurrentValue"/>
+<MudTextField T="string" id="@Id" @bind-Value="@CurrentValue" Label="@Label" For="ValidationFor"/>
 
 @code {
 
