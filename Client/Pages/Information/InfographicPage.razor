@@ -1,0 +1,28 @@
+@page "/information/infographic/{id}"
+@using UnitedSystemsCooperative.Web.Shared
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    @if (_infographic == null)
+    {
+        <MudText Align="Align.Center">Image not found</MudText>
+    }
+    else
+    {
+        <MudText Typo="Typo.h3" Align="Align.Center">@_infographic.Title</MudText>
+        <MudImage Src="@_infographic.ImgPath" Alt="@_infographic.Title"/>
+    }
+</MudContainer>
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    private Infographic? _infographic = null;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+}
