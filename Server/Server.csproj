@@ -21,7 +21,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Client\Client.csproj"/>
-        <ProjectReference Include="..\Shared\Shared.csproj" />
+        <ProjectReference Include="..\EmailService\EmailService.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.csproj"/>
     </ItemGroup>
 
 
