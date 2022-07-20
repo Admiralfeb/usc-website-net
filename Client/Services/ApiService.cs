@@ -19,7 +19,7 @@ public class ApiService
         return isSecure switch
         {
             false => _clientFactory.CreateClient(Constants.NoAuthHttpClientName),
-            _ => _clientFactory.CreateClient()
+            _ => _clientFactory.CreateClient(Constants.DefaultHttpClientName)
         };
     }
 }

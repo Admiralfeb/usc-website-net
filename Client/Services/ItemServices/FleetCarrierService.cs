@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using UnitedSystemsCooperative.Web.Client.Interfaces;
 using UnitedSystemsCooperative.Web.Shared;
 
@@ -6,6 +7,13 @@ namespace UnitedSystemsCooperative.Web.Client.Services;
 public class FleetCarrierService : BaseItemService, IItemService<FleetCarrier>
 {
     private const string ApiPath = "/api/fleetcarrier";
+    
+    private IEnumerable<FleetCarrier>? _fleetCarriers;
+    public IEnumerable<FleetCarrier> FleetCarriers
+    {
+        get => _fleetCarriers ?? new List<FleetCarrier>();
+        set => _fleetCarriers = value;
+    }
 
     public FleetCarrierService(ApiService api, StateService state) : base(api, state)
     {
@@ -18,12 +26,16 @@ public class FleetCarrierService : BaseItemService, IItemService<FleetCarrier>
 
     public IEnumerable<FleetCarrier> GetFromStore()
     {
-        throw new NotImplementedException();
+        Console.WriteLine("Get Fleet Carriers from store");
+        return FleetCarriers;
     }
 
     public async Task<IEnumerable<FleetCarrier>> GetFromServer()
     {
-        throw new NotImplementedException();
+        var client = Api.GetHttpClient(false);
+        var carriers = await client.GetFromJsonAsync<FleetCarrier[]>(ApiPath);
+        FleetCarriers = carriers ?? throw new Exception("Carriers not found");
+        return carriers;
     }
 
     public async Task UpdateItem(FleetCarrier item)

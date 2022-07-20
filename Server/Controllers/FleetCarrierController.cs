@@ -11,7 +11,7 @@ namespace UnitedSystemsCooperative.Web.Server.Controllers;
 [Produces("application/json")]
 public class FleetCarrierController : ControllerBase
 {
-    private const string DBCollectionName = "fleetcarriers";
+    private const string DBCollectionName = "fleetCarriers";
     private IDatabaseService _db;
 
     public FleetCarrierController(IDatabaseService dbService)

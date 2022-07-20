@@ -1,4 +1,4 @@
-namespace UnitedSystemsCooperative.Web.Client.Models;
+namespace UnitedSystemsCooperative.Web.Client.Modules.About;
 
 public class AboutLayoutButtonInfo
 {
