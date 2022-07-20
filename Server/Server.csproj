@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -6,23 +6,25 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>UnitedSystemsCooperative.Web.Server</RootNamespace>
         <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
-    </PropertyGroup>
+      <UserSecretsId>682ee57f-614e-4218-8759-57bb71c718b1</UserSecretsId>
+  </PropertyGroup>
 
     <PropertyGroup>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.3"/>
-        <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.26.1"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.7" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.7" />
+        <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.29.0" />
+        <PackageReference Include="Microsoft.Identity.Web" Version="1.25.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.2" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Client\Client.csproj"/>
-        <ProjectReference Include="..\EmailService\EmailService.csproj"/>
-        <ProjectReference Include="..\Shared\Shared.csproj"/>
+        <ProjectReference Include="..\Client\Client.csproj" />
+        <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 
 

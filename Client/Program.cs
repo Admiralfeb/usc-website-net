@@ -13,23 +13,22 @@ builder.Services.AddMudServices();
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-AddHttpClients(builder.Services, builder.HostEnvironment.BaseAddress);
+builder.Services.AddHttpClient("UnitedSystemsCooperative.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+    .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+// Supply HttpClient instances that include access tokens when making requests to the server project
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("UnitedSystemsCooperative.ServerAPI"));
+
+builder.Services.AddMsalAuthentication(options =>
+{
+    builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
+    options.ProviderOptions.DefaultAccessTokenScopes.Add("https://unitedsystemscooperative.onmicrosoft.com/aa9ec6f0-b9d9-43cb-a1a1-8cf39fa159ad/Api.Access");
+});
 
 AddServices(builder.Services, builder.Configuration);
 
 await builder.Build().RunAsync();
 
-static void AddHttpClients(IServiceCollection services, string baseAddress)
-{
-    services.AddHttpClient(Constants.DefaultHttpClientName,
-            client => client.BaseAddress = new Uri(baseAddress))
-        .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-    services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-        .CreateClient(Constants.DefaultHttpClientName));
-
-    services.AddHttpClient(Constants.NoAuthHttpClientName,
-        client => client.BaseAddress = new Uri(baseAddress));
-}
 
 static void AddServices(IServiceCollection services, IConfiguration configuration)
 {
@@ -39,13 +38,6 @@ static void AddServices(IServiceCollection services, IConfiguration configuratio
     services.AddSingleton<IItemService<ShipBuild>, BuildService>();
     services.AddSingleton<IItemService<FleetCarrier>, FleetCarrierService>();
     services.AddSingleton<IItemService<FactionSystem>, SystemService>();
-
-    services.AddOidcAuthentication(options =>
-    {
-        configuration.Bind("Auth0", options.ProviderOptions);
-        options.ProviderOptions.ResponseType = "code";
-        options.ProviderOptions.AdditionalProviderParameters.Add("audience", configuration["Auth0:Audience"]);
-    });
 }
 
 public partial class Program
