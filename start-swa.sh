@@ -1,0 +1,1 @@
+swa start https://localhost:5001 --api-location ./Api

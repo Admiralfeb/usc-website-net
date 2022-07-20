@@ -1,0 +1,20 @@
+<MudPaper Class="@_paddingClass">
+    @ChildContent
+</MudPaper>
+
+@code {
+
+    [Parameter]
+    public int Padding { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private string _paddingClass = "pa-1";
+
+    protected override void OnInitialized()
+    {
+        _paddingClass = $"pa-{Padding.ToString()}";
+    }
+
+}

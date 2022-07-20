@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using UnitedSystemsCooperative.Web.Shared.FormValidators;
+using UnitedSystemsCooperative.Web.Shared.Interfaces;
 
 namespace UnitedSystemsCooperative.Web.Shared.JoinRequest;
 
