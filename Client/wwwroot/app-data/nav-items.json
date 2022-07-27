@@ -1,0 +1,28 @@
+{
+  "NavItems": [
+    {
+      "To": "/home",
+      "Text": "Home"
+    },
+    {
+      "To": "/about",
+      "Text": "About"
+    },
+    {
+      "To": "/information",
+      "Text": "Information"
+    },
+    {
+      "To": "/builds",
+      "Text": "USC Builds"
+    },
+    {
+      "To": "/massacres",
+      "Text": "Massacre Mission Tracker"
+    },
+    {
+      "To": "/merch",
+      "Text": "Merch"
+    }
+  ]
+}
