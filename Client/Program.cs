@@ -24,7 +24,7 @@ static async Task AddConfigurations(WebAssemblyHostBuilder builder)
 {
     var http = new HttpClient {BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)};
     builder.Services.AddScoped(sp => http);
-    var configs = builder.Configuration.GetValue("app-data");
+    var configs = builder.Configuration.GetSection("app-data").Get<string[]>();
 
     if (configs == null)
     {
