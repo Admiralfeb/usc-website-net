@@ -1,6 +1,7 @@
 @page "/about/rules"
 @using UnitedSystemsCooperative.Web.Client.Models
-@inject IConfiguration Configuration
+@using Microsoft.Extensions.Options
+@inject IOptions<AboutSettings> AboutSettings
 
 <PageTitle>USC | Rules</PageTitle>
 
@@ -51,9 +52,10 @@
 
     protected override void OnInitialized()
     {
-        var rules = Configuration.GetSection(RulesSettings.SettingsName).Get<RulesSettings>();
+        var rules = AboutSettings.Value.Rules;
         _discordRules = rules.Discord;
         _memberRules = rules.Member;
         base.OnInitialized();
     }
+
 }
