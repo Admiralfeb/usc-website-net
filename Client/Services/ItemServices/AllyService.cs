@@ -16,7 +16,7 @@ public class AllyService : BaseItemService, IItemService<Ally>
         set => _allies = value;
     }
 
-    public AllyService(ApiService api, StateService state) : base(api, state)
+    public AllyService(ApiService api) : base(api)
     {
     }
 

@@ -1,8 +1,9 @@
+using UnitedSystemsCooperative.Web.Client.Interfaces;
+
 namespace UnitedSystemsCooperative.Web.Client.Modules.About;
 
-public class AboutLayoutButtonInfo
+public class AboutLayoutButtonInfo : ILink
 {
-    public const string SettingName = "AboutItems";
     public string Title { get; set; } = string.Empty;
     public string Caption { get; set; } = string.Empty;
     public bool Local { get; set; }

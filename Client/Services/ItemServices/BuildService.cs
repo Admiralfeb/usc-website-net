@@ -5,7 +5,7 @@ namespace UnitedSystemsCooperative.Web.Client.Services;
 
 public class BuildService : BaseItemService, IItemService<ShipBuild>
 {
-    public BuildService(ApiService api, StateService state) : base(api, state)
+    public BuildService(ApiService api) : base(api)
     {
     }
 

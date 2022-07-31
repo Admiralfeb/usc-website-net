@@ -1,6 +1,6 @@
 @page "/merch"
-@using UnitedSystemsCooperative.Web.Client.Models
-@inject IConfiguration _configuration
+@using UnitedSystemsCooperative.Web.Client.Services
+@inject UrlService UrlService
 
 <PageTitle>USC | Merch</PageTitle>
 
@@ -10,10 +10,10 @@
     <PaperP1>
         <div class="text-center">
             <MudText>Click the image or the link below to open the merch store.</MudText>
-            <a href="@merchUrl" target="_blank" rel="noreferrer">
+            <a href="@_merchUrl" target="_blank" rel="noreferrer">
                 <img style="width: 100%;" src="/img/expansion.png" alt="expansion image"/>
             </a>
-            <MudLink Href="@merchUrl" Target="_blank">
+            <MudLink Href="@_merchUrl" Target="_blank">
                 <MudText>Go to Merch Store</MudText>
             </MudLink>
         </div>
@@ -22,12 +22,11 @@
 
 @code {
 
-    private string merchUrl = string.Empty;
+    private string _merchUrl = string.Empty;
 
     protected override void OnInitialized()
     {
-        var uscLinks = _configuration.GetSection(UscLink.SettingName).Get<UscLink[]>();
-        merchUrl = uscLinks.FirstOrDefault(x => x.Title == "MerchStore")?.Link ?? string.Empty;
+        _merchUrl = UrlService.GetUscLinkByKey("MerchStore");
     }
 
 }
