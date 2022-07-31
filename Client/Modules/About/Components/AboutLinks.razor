@@ -1,8 +1,10 @@
 @using UnitedSystemsCooperative.Web.Client.Modules.About
 @using UnitedSystemsCooperative.Web.Client.Models
 @using Microsoft.Extensions.Options
+@using UnitedSystemsCooperative.Web.Client.Models.Options
+@using UnitedSystemsCooperative.Web.Client.Services
 @inject IOptions<AboutOptions> AboutOptions
-@inject IOptions<LinkOptions> LinkOptions
+@inject UrlService UrlService
 
 <MudContainer MaxWidth="MaxWidth.Medium" Class="pa-2 mb-2" Style="text-align: center; width: fit-content; margin: auto">
     <MudPaper>
@@ -33,15 +35,8 @@
 
     protected override void OnInitialized()
     {
-        _buttons = AboutOptions.Value.LayoutButtonInfos;
-        var uscLinks = LinkOptions.Value.UscLinks;
-        _buttons = _buttons.Select(x =>
-        {
-            if (!x.Link.Contains('{')) return x;
-            var replacement = uscLinks.First(y => string.Equals(y.Replace, x.Link, StringComparison.CurrentCultureIgnoreCase));
-            x.Link = replacement.Link;
-            return x;
-        }).ToArray();
+        _buttons = AboutOptions.Value.LayoutButtonInfos ?? Array.Empty<AboutLayoutButtonInfo>();
+        _buttons = UrlService.ReplaceUscUrls(_buttons).ToArray() as AboutLayoutButtonInfo[];
     }
 
 }

@@ -1,4 +1,6 @@
-namespace UnitedSystemsCooperative.Web.Client.Models;
+using UnitedSystemsCooperative.Web.Client.Interfaces;
+
+namespace UnitedSystemsCooperative.Web.Client.Models.Options;
 
 public class LinkOptions
 {
@@ -14,7 +16,7 @@ public class NavItem
     public string Text { get; set; }
 }
 
-public class UscLink
+public class UscLink : ILink
 {
     public string Title { get; set; } = string.Empty;
     public string Replace { get; set; } = string.Empty;

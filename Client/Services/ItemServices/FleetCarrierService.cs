@@ -15,7 +15,7 @@ public class FleetCarrierService : BaseItemService, IItemService<FleetCarrier>
         set => _fleetCarriers = value;
     }
 
-    public FleetCarrierService(ApiService api, StateService state) : base(api, state)
+    public FleetCarrierService(ApiService api) : base(api)
     {
     }
 

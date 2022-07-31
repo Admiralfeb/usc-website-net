@@ -1,11 +1,8 @@
-using System.Collections.Immutable;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using UnitedSystemsCooperative.Web.Client.Interfaces;
-using UnitedSystemsCooperative.Web.Client.Models;
 using UnitedSystemsCooperative.Web.Client.Services;
 using UnitedSystemsCooperative.Web.Shared;
-using Microsoft.Extensions.DependencyInjection;
+using UnitedSystemsCooperative.Web.Client.Models.Options;
 
 namespace UnitedSystemsCooperative.Web.Client;
 
@@ -44,6 +41,7 @@ public static class ServiceExtensions
 
         services.AddSingleton<ApiService>();
         services.AddSingleton<StateService>();
+        services.AddSingleton<UrlService>();
         services.AddSingleton<IItemService<Ally>, AllyService>();
         services.AddSingleton<IItemService<ShipBuild>, BuildService>();
         services.AddSingleton<IItemService<FleetCarrier>, FleetCarrierService>();

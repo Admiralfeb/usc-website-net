@@ -1,7 +1,6 @@
 @page "/merch"
-@using UnitedSystemsCooperative.Web.Client.Models
-@using Microsoft.Extensions.Options
-@inject IOptions<LinkOptions> LinkOptions
+@using UnitedSystemsCooperative.Web.Client.Services
+@inject UrlService UrlService
 
 <PageTitle>USC | Merch</PageTitle>
 
@@ -27,8 +26,7 @@
 
     protected override void OnInitialized()
     {
-        var uscLinks = LinkOptions.Value.UscLinks;
-        _merchUrl = uscLinks.FirstOrDefault(x => x.Title == "MerchStore")?.Link ?? string.Empty;
+        _merchUrl = UrlService.GetUscLinkByKey("MerchStore");
     }
 
 }

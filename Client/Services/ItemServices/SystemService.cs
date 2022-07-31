@@ -16,7 +16,7 @@ public class SystemService : BaseItemService, IItemService<FactionSystem>
         set => _factionSystems = value;
     }
 
-    public SystemService(ApiService api, StateService state) : base(api, state)
+    public SystemService(ApiService api) : base(api)
     {
     }
 
