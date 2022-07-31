@@ -94,6 +94,7 @@ jobs:
 
   playwright:
     name: Playwright Tests
+    if: ${{ false }} # disable job
     strategy:
       fail-fast: false
       matrix:
