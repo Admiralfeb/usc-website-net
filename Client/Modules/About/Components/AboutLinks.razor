@@ -1,7 +1,7 @@
 @using UnitedSystemsCooperative.Web.Client.Modules.About
 @using UnitedSystemsCooperative.Web.Client.Models
 @using Microsoft.Extensions.Options
-@inject IOptions<AboutSettings> AboutSettings
+@inject IOptions<AboutOptions> AboutOptions
 @inject IOptions<LinkOptions> LinkOptions
 
 <MudContainer MaxWidth="MaxWidth.Medium" Class="pa-2 mb-2" Style="text-align: center; width: fit-content; margin: auto">
@@ -33,7 +33,7 @@
 
     protected override void OnInitialized()
     {
-        _buttons = AboutSettings.Value.AboutItems;
+        _buttons = AboutOptions.Value.LayoutButtonInfos;
         var uscLinks = LinkOptions.Value.UscLinks;
         _buttons = _buttons.Select(x =>
         {

@@ -14,7 +14,7 @@ public static class ServiceExtensions
     public static IServiceCollection AddConfigs(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<LinkOptions>(configuration.GetSection(LinkOptions.SettingsName));
-        services.Configure<AboutSettings>(configuration.GetSection(AboutSettings.SettingsName));
+        services.Configure<AboutOptions>(configuration.GetSection(AboutOptions.SettingsName));
 
 
         return services;
