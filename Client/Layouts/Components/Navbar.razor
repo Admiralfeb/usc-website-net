@@ -31,7 +31,7 @@
     [Parameter]
     public Type? PageType { get; set; }
 
-    private NavItem[]? NavItems { get; set; }
+    private NavItem[] NavItems { get; set; } = Array.Empty<NavItem>();
 
     protected override void OnInitialized()
     {

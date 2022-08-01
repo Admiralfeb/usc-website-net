@@ -14,13 +14,13 @@
 
 @code {
 
-    public Type PageType { get; set; }
+    private Type? PageType { get; set; }
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
     MudTheme _uscTheme = UscTheme.Theme;
 
     protected override void OnParametersSet()
     {
-        PageType = (Body.Target as RouteView)?.RouteData.PageType;
+        PageType = (Body?.Target as RouteView)?.RouteData.PageType;
         base.OnParametersSet();
     }
 

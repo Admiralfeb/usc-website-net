@@ -44,9 +44,9 @@
 
     private bool _isLoading;
     private FactionSystem[]? _systems;
-    private FactionSystem[]? _controlledSystems;
+    private FactionSystem[] _controlledSystems = Array.Empty<FactionSystem>();
     private string _controlledSystemsTitle = string.Empty;
-    private FactionSystem[]? _presentSystems;
+    private FactionSystem[] _presentSystems = Array.Empty<FactionSystem>();
     private string _presentSystemsTitle = string.Empty;
 
     protected override async Task OnInitializedAsync()
@@ -60,10 +60,10 @@
         }
         finally
         {
-            _controlledSystems = _systems?.Where(x => x.IsControlled).ToArray();
-            _controlledSystemsTitle = $"Controlled Systems - {_controlledSystems?.Length}";
-            _presentSystems = _systems?.Where(x => !x.IsControlled).ToArray();
-            _presentSystemsTitle = $"Present in Systems - {_presentSystems?.Length}";
+            _controlledSystems = _systems?.Where(x => x.IsControlled).ToArray() ?? Array.Empty<FactionSystem>();
+            _controlledSystemsTitle = $"Controlled Systems - {_controlledSystems.Length}";
+            _presentSystems = _systems?.Where(x => !x.IsControlled).ToArray() ?? Array.Empty<FactionSystem>();
+            _presentSystemsTitle = $"Present in Systems - {_presentSystems.Length}";
             _isLoading = false;
         }
     }
