@@ -7,18 +7,12 @@ namespace UnitedSystemsCooperative.Web.Client.Services;
 public class AllyService : BaseItemService, IItemService<Ally>
 {
     private const string ApiPath = "/api/ally";
-    
-    private IEnumerable<Ally>? _allies;
 
-    private IEnumerable<Ally> Allies
-    {
-        get => _allies ?? new List<Ally>();
-        set => _allies = value;
-    }
+    private IEnumerable<Ally> _allies = Enumerable.Empty<Ally>();
 
-    public AllyService(ApiService api) : base(api)
-    {
-    }
+    private readonly ILogger<AllyService> _logger;
+
+    public AllyService(ApiService api, ILogger<AllyService> logger): base(api) => _logger = logger;
 
     public async Task AddItem(Ally item)
     {
@@ -27,16 +21,16 @@ public class AllyService : BaseItemService, IItemService<Ally>
 
     public IEnumerable<Ally> GetFromStore()
     {
-        Console.WriteLine("Get Allies from store");
-        return Allies;
+        _logger.LogInformation("Get Allies from store");
+        return _allies;
     }
 
     public async Task<IEnumerable<Ally>> GetFromServer()
     {
         var client = Api.GetHttpClient(false);
         var allies = await client.GetFromJsonAsync<Ally[]>(ApiPath);
-        Allies = allies ?? throw new Exception("Allies not found");
-        return allies;
+        _allies = allies ?? throw new Exception("Allies not found");
+        return _allies;
     }
 
     public async Task UpdateItem(Ally item)
