@@ -12,17 +12,18 @@ public static class ServiceExtensions
     {
         services.Configure<LinkOptions>(configuration.GetSection(LinkOptions.SettingsName));
         services.Configure<AboutOptions>(configuration.GetSection(AboutOptions.SettingsName));
+        services.Configure<InformationOptions>(configuration.GetSection(InformationOptions.SettingsName));
     }
 
     public static void AddHttpClients(this IServiceCollection services, string baseAddress)
     {
         services.AddHttpClient(Constants.NoAuthHttpClientName,
             client => client.BaseAddress = new Uri(baseAddress));
-        
+
         services.AddHttpClient(Constants.DefaultHttpClientName,
                 client => client.BaseAddress = new Uri(baseAddress))
             .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-        
+
         // services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>());
     }
 
@@ -34,7 +35,7 @@ public static class ServiceExtensions
             options.ProviderOptions.DefaultAccessTokenScopes.Add(
                 "https://unitedsystemscooperative.onmicrosoft.com/aa9ec6f0-b9d9-43cb-a1a1-8cf39fa159ad/Api.Access");
         });
-        
+
         services.AddSingleton<UrlService>();
 
         services.AddScoped<ApiService>();
