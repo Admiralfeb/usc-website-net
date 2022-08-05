@@ -22,7 +22,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.x      
+          dotnet-version: 6.0.x
       - name: Restore dependencies
         run: dotnet restore
       - name: Cache SonarCloud packages
@@ -62,13 +62,12 @@ jobs:
         run: ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
       - name: Codecov
         uses: codecov/codecov-action@v1
-      - name: Test Report
-        uses: dorny/test-reporter@v1
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v2
         if: success() || failure()
         with:
-          name: 'Test Results'
+          name: test-results
           path: '**/**/*.trx'
-          reporter: dotnet-trx
 
   build_for_playwright:
     name: Build for Playwright
@@ -95,6 +94,7 @@ jobs:
 
   playwright:
     name: Playwright Tests
+    if: ${{ false }} # disable job
     strategy:
       fail-fast: false
       matrix:
@@ -124,24 +124,23 @@ jobs:
           key: ${{ runner.os }}-cache-build
       - name: Test
         run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- dotnet test --logger trx -r TestResults --verbosity normal E2ETest
-      - name: Test Report
-        uses: dorny/test-reporter@v1
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v2
         if: success() || failure()
         with:
-          name: 'Test Results Playwright ${{ matrix.browser }}'
+          name: test-results ${{ matrix.browser }}
           path: '**/**/*.trx'
-          reporter: dotnet-trx
 
   deploy:
     name: Deploy to Azure
     runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }} && (github.ref == 'refs/heads/main' && github.event_name == 'push') || (github.base_ref == 'main' && (github.event_name == 'pull_request' && github.event.action != 'closed'))
+    if: (${{ github.actor != 'dependabot[bot]' }} && github.ref == 'refs/heads/main' && github.event_name == 'push') || (github.base_ref == 'main' && (github.event_name == 'pull_request' && github.event.action != 'closed'))
     needs: [build_and_test, playwright]
 
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: true          
+          submodules: true
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1

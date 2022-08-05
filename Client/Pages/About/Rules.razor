@@ -1,5 +1,8 @@
 @page "/about/rules"
-@inject IConfiguration _configuration
+@using UnitedSystemsCooperative.Web.Client.Models
+@using Microsoft.Extensions.Options
+@using UnitedSystemsCooperative.Web.Client.Models.Options
+@inject IOptions<AboutOptions> AboutSettings
 
 <PageTitle>USC | Rules</PageTitle>
 
@@ -42,3 +45,18 @@
         </MudGrid>
     </MudPaper>
 </MudContainer>
+
+@code {
+
+    private string[]? _discordRules;
+    private string[]? _memberRules;
+
+    protected override void OnInitialized()
+    {
+        var rules = AboutSettings.Value.Rules;
+        _discordRules = rules!.Discord;
+        _memberRules = rules.Member;
+        base.OnInitialized();
+    }
+
+}

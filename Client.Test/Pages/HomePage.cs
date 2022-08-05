@@ -5,14 +5,13 @@ using Xunit;
 
 namespace UnitedSystemsCooperative.Web.Client.Test.Pages;
 
-public class HomePageTests
+public class HomePageTests : TestContext
 {
     [Fact]
     public void RendersLatinText()
     {
-        using var ctx = new TestContext();
-        var cut = ctx.RenderComponent<Home>();
-        
+        var cut = RenderComponent<Home>();
+
         Assert.Equal("Ad astra per aspera".ToUpper(), cut.Find(".latin-text").Text());
     }
 }

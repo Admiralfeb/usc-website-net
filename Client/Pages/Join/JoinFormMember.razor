@@ -9,26 +9,11 @@
             <DataAnnotationsValidator/>
 
             @* Cmdr Name *@
-            <JoinQuestionBox Question="Please enter your in-game CMDR name">
-                <MudTextField T="string" Label="CMDR Name" @bind-value="model.CmdrName" For="@(() => model.CmdrName)" DisplayName="Cmdr Name"/>
-            </JoinQuestionBox>
+            <JoinCmdrQuestion TItem="MemberJoinRequest" model="@model"/>
             @* Discord Name *@
-            <JoinQuestionBox Question="Please enter your discord name in format: {username}#0000">
-                <MudTextField T="string" Label="Discord Name" @bind-value="model.DiscordName" HelperText="{username}#0000" For="@(() => model.DiscordName)"/>
-            </JoinQuestionBox>
+            <JoinDiscordQuestion TItem="MemberJoinRequest" model="@model"/>
             @* Platform *@
-            <JoinQuestionBox Question="Which platform do you primarily play on?">
-                <MudRadioGroup @bind-SelectedOption="model.Platform" For="@(() => model.Platform)" Class="text-center">
-                    @foreach (PlatformType item in Enum.GetValues(typeof(PlatformType)))
-                    {
-                        if (item.Equals(PlatformType.Unknown))
-                            continue;
-
-                        <MudRadio Option="item" Color="Color.Primary">@item.ToDescriptionString()</MudRadio>
-                    }
-                </MudRadioGroup>
-                <ValidationMessage For="@(() => model.Platform)"></ValidationMessage>
-            </JoinQuestionBox>
+            <JoinPlatformQuestion TItem="MemberJoinRequest" model="@model"/>
             @* Playing Length *@
             <JoinQuestionBox Question="How long have you been playing?">
                 <MudRadioGroup @bind-SelectedOption="model.PlayingLength" For="@(() => model.PlayingLength)" Class="text-center">
@@ -43,43 +28,12 @@
                 <ValidationMessage For="@(() => model.PlayingLength)"></ValidationMessage>
             </JoinQuestionBox>
             @* Referral *@
-            <JoinQuestionBox Question="How did you find us?">
-                <MudSelect @bind-Value="model.Referral" Label="Select" AnchorOrigin="Origin.BottomCenter" Strict="true" For="@(()=>model.Referral)">
-                    @foreach (ReferralType item in Enum.GetValues(typeof(ReferralType)))
-                    {
-                        if (item.Equals(ReferralType.Unknown))
-                            continue;
-
-                        <MudSelectItem Value="item">@item.ToDescriptionString()</MudSelectItem>
-                    }
-                </MudSelect>
-                <ValidationMessage For="@(() => model.Referral)"></ValidationMessage>
-                @if (!string.IsNullOrEmpty(_referralQuestion))
-                {
-                    
-                    <MudText Class="mt-2">@_referralQuestion</MudText>
-                    <MudTextField T="string" Label="Explain" @bind-value="model.ReferralDescribe" For="@(() => model.ReferralDescribe)"/>
-                }
-            </JoinQuestionBox>
+            <JoinReferralQuestion TItem="MemberJoinRequest" model="@model"/>
             @* Region *@
-            <JoinQuestionBox Question="Which region are you in?">
-                <MudRadioGroup @bind-SelectedOption="model.Region" For="@(() => model.Region)" Class="text-center px-2">
-                    @foreach (RegionType item in Enum.GetValues(typeof(RegionType)))
-                    {
-                        if (item.Equals(RegionType.Unknown))
-                            continue;
-
-                        <MudRadio Option="item" Color="Color.Primary">@item.ToDescriptionString()</MudRadio>
-                    }
-                </MudRadioGroup>
-                <ValidationMessage For="@(() => model.Region)"></ValidationMessage>
-            </JoinQuestionBox>
+            <JoinRegionQuestion TItem="MemberJoinRequest" model="@model"/>
             @* Rules *@
-            <JoinQuestionBox>
-                <MudText>Do you agree to follow our <MudLink Href="/about/rules" Target="_blank">rules</MudLink>?</MudText>
-                <MudCheckBox @bind-Checked="model.AcceptsRules" Color="Color.Primary" Label="Accept Rules"></MudCheckBox>
-                <ValidationMessage For="@(() => model.AcceptsRules)"></ValidationMessage>
-            </JoinQuestionBox>
+            <JoinRulesQuestion TItem="MemberJoinRequest" model="@model"/>
+
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary">Submit</MudButton>
         </EditForm>
     </MudPaper>

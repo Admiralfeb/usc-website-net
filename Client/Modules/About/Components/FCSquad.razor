@@ -1,0 +1,25 @@
+@using UnitedSystemsCooperative.Web.Shared
+
+<MudText Typo="Typo.h4" Align="Align.Center">Personal Fleet Carriers - @Carriers?.Count()</MudText>
+<MudTable Items="@Carriers" Hover="true" Loading="@IsLoading" LoadingProgressColor="Color.Secondary">
+    <HeaderContent>
+        <MudTh>Purpose</MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>ID</MudTh>
+        <MudTh>Owner</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Purpose</MudTd>
+        <FCTableRow carrier="@context"/>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    [Parameter]
+    public IEnumerable<FleetCarrier>? Carriers { get; set; }
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+}

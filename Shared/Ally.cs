@@ -1,7 +1,8 @@
-﻿namespace UnitedSystemsCooperative.Web.Shared;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Ally
+namespace UnitedSystemsCooperative.Web.Shared;
+
+public class Ally : DbItem
 {
-    public string Id { get; set; }
-    public string Name { get; set; }
+    [Required] public string Name { get; set; }
 }

@@ -1,0 +1,71 @@
+@page "/about/systems"
+@using UnitedSystemsCooperative.Web.Shared
+@using UnitedSystemsCooperative.Web.Client.Interfaces
+@inject IItemService<FactionSystem> Service
+
+<UnderConstruction Title="Systems"/>
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudText Typo="Typo.h4" Align="Align.Center">Faction Information</MudText>
+    <MudPaper>
+        @if (_isLoading)
+        {
+            <div>Loading systems</div>
+        }
+        else
+        {
+            <MudList>
+                <MudListItem Href="https://inara.cz/galaxy-minorfaction/78085/" target="_blank" Text="United Systems Cooperative - Minor Faction"/>
+                @if (_systems != null)
+                {
+                    <MudListItem Text="@_controlledSystemsTitle" InitiallyExpanded="true">
+                        <NestedList>
+                            @foreach (var system in _controlledSystems)
+                            {
+                                <MudListItem Href="@system.Name" Text="@system.Name"/>
+                            }
+                        </NestedList>
+                    </MudListItem>
+                    <MudListItem Text="@_presentSystemsTitle" InitiallyExpanded="true">
+                        <NestedList>
+                            @foreach (var system in _presentSystems)
+                            {
+                                <MudListItem Href="@system.Name" Text="@system.Name"/>
+                            }
+                        </NestedList>
+                    </MudListItem>
+                }
+            </MudList>
+        }
+    </MudPaper>
+</MudContainer>
+
+@code {
+
+    private bool _isLoading;
+    private FactionSystem[]? _systems;
+    private FactionSystem[] _controlledSystems = Array.Empty<FactionSystem>();
+    private string _controlledSystemsTitle = string.Empty;
+    private FactionSystem[] _presentSystems = Array.Empty<FactionSystem>();
+    private string _presentSystemsTitle = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _systems = Service.GetFromStore().ToArray();
+        try
+        {
+            if (_systems == null)
+                _isLoading = true;
+            _systems = (await Service.GetFromServer()).ToArray();
+        }
+        finally
+        {
+            _controlledSystems = _systems?.Where(x => x.IsControlled).ToArray() ?? Array.Empty<FactionSystem>();
+            _controlledSystemsTitle = $"Controlled Systems - {_controlledSystems.Length}";
+            _presentSystems = _systems?.Where(x => !x.IsControlled).ToArray() ?? Array.Empty<FactionSystem>();
+            _presentSystemsTitle = $"Present in Systems - {_presentSystems.Length}";
+            _isLoading = false;
+        }
+    }
+
+}

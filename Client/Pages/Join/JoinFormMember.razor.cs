@@ -4,12 +4,12 @@ using UnitedSystemsCooperative.Web.Shared.JoinRequest;
 
 namespace UnitedSystemsCooperative.Web.Client.Pages.Join;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public partial class JoinFormMember
 {
-    private MemberJoinRequest model = new();
     private EditContext? _editContext;
     private string _referralQuestion = string.Empty;
-    bool success;
+    private MemberJoinRequest model = new();
 
     protected override void OnInitialized()
     {
@@ -31,7 +31,6 @@ public partial class JoinFormMember
     private void OnValidSubmit(EditContext context)
     {
         Console.WriteLine(JsonSerializer.Serialize(context.Model));
-        success = true;
         StateHasChanged();
     }
 }

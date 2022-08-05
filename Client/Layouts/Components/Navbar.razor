@@ -1,7 +1,7 @@
 @using UnitedSystemsCooperative.Web.Client.Models
 @using Microsoft.Extensions.Options
-@using System.Text.Json
-@inject IConfiguration _configuration
+@using UnitedSystemsCooperative.Web.Client.Models.Options
+@inject IOptions<LinkOptions> Links
 
 <MudBreakpointProvider>
     <MudText>Current: @PageType?.ToString().Replace("UnitedSystemsCooperative.Web.Client.Pages.", "")</MudText>
@@ -25,3 +25,19 @@
         </MudAppBar>
     </MudHidden>
 </MudBreakpointProvider>
+
+@code {
+
+    [Parameter]
+    public Type? PageType { get; set; }
+
+    private NavItem[] NavItems { get; set; } = Array.Empty<NavItem>();
+
+    protected override void OnInitialized()
+    {
+        NavItems = Links.Value.NavItems;
+
+        base.OnInitialized();
+    }
+
+}

@@ -1,0 +1,42 @@
+@using UnitedSystemsCooperative.Web.Client.Modules.About
+@using UnitedSystemsCooperative.Web.Client.Models
+@using Microsoft.Extensions.Options
+@using UnitedSystemsCooperative.Web.Client.Models.Options
+@using UnitedSystemsCooperative.Web.Client.Services
+@inject IOptions<AboutOptions> AboutOptions
+@inject UrlService UrlService
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="pa-2 mb-2" Style="text-align: center; width: fit-content; margin: auto">
+    <MudPaper>
+        <div style="display: grid;grid-template-rows: auto">
+            <div class="button-group">
+                @foreach (var button in _buttons.Where(x => x.Local == true))
+                {
+                    <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Link="@button.Link" Class="ma-2">
+                        @button.Title
+                    </MudButton>
+                }
+            </div>
+            <div class="button-group">
+                @foreach (var button in _buttons.Where(x => x.Local == false))
+                {
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" Link="@button.Link" Class="ma-2">
+                        @button.Title
+                    </MudButton>
+                }
+            </div>
+        </div>
+    </MudPaper>
+</MudContainer>
+
+@code{
+
+    private AboutLayoutButtonInfo[] _buttons = Array.Empty<AboutLayoutButtonInfo>();
+
+    protected override void OnInitialized()
+    {
+        _buttons = AboutOptions.Value.LayoutButtonInfos ?? Array.Empty<AboutLayoutButtonInfo>();
+        _buttons = UrlService.ReplaceUscUrls(_buttons).ToArray() as AboutLayoutButtonInfo[];
+    }
+
+}

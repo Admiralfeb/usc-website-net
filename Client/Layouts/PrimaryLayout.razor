@@ -7,7 +7,21 @@
 
 <MudLayout>
     <Navbar PageType="@PageType"/>
-    <MudMainContent>
+    <MudMainContent Class="mb-2">
         @Body
     </MudMainContent>
 </MudLayout>
+
+@code {
+
+    private Type? PageType { get; set; }
+    // ReSharper disable once FieldCanBeMadeReadOnly.Local
+    MudTheme _uscTheme = UscTheme.Theme;
+
+    protected override void OnParametersSet()
+    {
+        PageType = (Body?.Target as RouteView)?.RouteData.PageType;
+        base.OnParametersSet();
+    }
+
+}

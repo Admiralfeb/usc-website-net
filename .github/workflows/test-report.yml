@@ -1,0 +1,36 @@
+name: 'CI Test Report'
+
+on:
+  workflow_run:
+    workflows: 
+      - .NET Build, Test, Deploy
+      - Dependabot Build/Test
+    types:
+      - completed
+        
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Report Main
+        uses: dorny/test-reporter@v1
+        with:
+          artifact: test-results
+          name: 'Test Results'
+          path: '**/**/*.trx'
+          reporter: dotnet-trx
+  report-playwright:
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [ chromium, firefox, webkit ]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Test Report ${{ matrix.browser }}
+        uses: dorny/test-reporter@v1
+        with:
+          artifact: test-results ${{ matrix.browser }}
+          name: 'Test Results ${{ matrix.browser}}'
+          path: '*.trx'
+          reporter: dotnet-trx
