@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using UnitedSystemsCooperative.Web.Client.Interfaces;
+using UnitedSystemsCooperative.Web.Client.LazyServices;
 using UnitedSystemsCooperative.Web.Client.Services;
 using UnitedSystemsCooperative.Web.Shared;
 using UnitedSystemsCooperative.Web.Client.Models.Options;
@@ -23,8 +24,6 @@ public static class ServiceExtensions
         services.AddHttpClient(Constants.DefaultHttpClientName,
                 client => client.BaseAddress = new Uri(baseAddress))
             .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-
-        // services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>());
     }
 
     public static void AddServices(this IServiceCollection services, IConfiguration configuration)
@@ -43,5 +42,8 @@ public static class ServiceExtensions
         services.AddScoped<IItemService<ShipBuild>, BuildService>();
         services.AddScoped<IItemService<FleetCarrier>, FleetCarrierService>();
         services.AddScoped<IItemService<FactionSystem>, SystemService>();
+
+        // Lazy Loaded Services
+        services.AddScoped<MassacreServiceFactory>();
     }
 }

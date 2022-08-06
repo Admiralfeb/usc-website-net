@@ -17,11 +17,22 @@
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="E2ETest" />
+        <InternalsVisibleTo Include="E2ETest"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Shared\Shared.csproj" />
+        <ProjectReference Include="..\Client.LazyServices\Client.LazyServices.csproj"/>
+        <ProjectReference Include="..\Client.Massacre\Client.Massacre.csproj"/>
+        <ProjectReference Include="..\Client.Shared\Client.Shared.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.csproj"/>
     </ItemGroup>
-    
+
+    <ItemGroup>
+        <BlazorWebAssemblyLazyLoad Include="Client.Massacre.dll"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Modules\Massacre"/>
+    </ItemGroup>
+
 </Project>

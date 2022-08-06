@@ -28,8 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Fakes" />
-    <Folder Include="Layouts" />
+    <Folder Include="Shared"/>
   </ItemGroup>
 
 </Project>

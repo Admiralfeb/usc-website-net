@@ -1,11 +1,21 @@
-﻿<CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(App).Assembly">
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Services
+@using System.Reflection
+@inject LazyAssemblyLoader AssemblyLoader;
+@inject ILogger<App> Logger;
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly"
+            AdditionalAssemblies="_lazyLoadedAssemblies"
+            OnNavigateAsync="@OnNavigateAsync">
+        <Navigating>
+            <UscSpinner/>
+        </Navigating>
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(PrimaryLayout)">
                 <NotAuthorized>
                     @if (context.User.Identity?.IsAuthenticated != true)
                     {
-                        <RedirectToLogin />
+                        <RedirectToLogin/>
                     }
                     else
                     {
@@ -13,7 +23,7 @@
                     }
                 </NotAuthorized>
             </AuthorizeRouteView>
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
         </Found>
         <NotFound>
             <PageTitle>Not found</PageTitle>
@@ -23,3 +33,26 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+    // ReSharper disable once FieldCanBeMadeReadOnly.Local
+    private List<Assembly> _lazyLoadedAssemblies = new();
+
+    private async Task OnNavigateAsync(NavigationContext args)
+    {
+        try
+        {
+            var assemblies = args.Path switch
+            {
+                "massacres" => await AssemblyLoader.LoadAssembliesAsync(new[] {"Client.Massacre.dll"}),
+                _ => Array.Empty<Assembly>()
+                };
+            _lazyLoadedAssemblies.AddRange(assemblies);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError("Error: {Message}", ex.Message);
+        }
+    }
+
+}

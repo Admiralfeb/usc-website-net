@@ -1,6 +1,6 @@
 using AngleSharp.Dom;
 using Bunit;
-using UnitedSystemsCooperative.Web.Client.Shared;
+using UnitedSystemsCooperative.Web.Client.SharedComponents;
 using Xunit;
 
 namespace UnitedSystemsCooperative.Web.Client.Test.Pages;
