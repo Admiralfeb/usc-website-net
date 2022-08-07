@@ -1,12 +1,12 @@
-﻿@using Microsoft.AspNetCore.Components.WebAssembly.Services
-@using System.Reflection
-@inject LazyAssemblyLoader AssemblyLoader;
+﻿@using System.Reflection
+@using MudBlazor.Extensions
+@using UnitedSystemsCooperative.Web.Client.About.Pages
+@using UnitedSystemsCooperative.Web.Client.Massacre
 @inject ILogger<App> Logger;
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly"
-            AdditionalAssemblies="_lazyLoadedAssemblies"
-            OnNavigateAsync="@OnNavigateAsync">
+            AdditionalAssemblies="_additionalAssemblies">
         <Navigating>
             <UscSpinner/>
         </Navigating>
@@ -36,7 +36,11 @@
 
 @code {
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
-    private List<Assembly> _lazyLoadedAssemblies = new();
+    private List<Assembly> _additionalAssemblies = new()
+    {
+        typeof(AboutPage).Assembly,
+        typeof(MassacrePage).Assembly
+    };
 
     private async Task OnNavigateAsync(NavigationContext args)
     {
@@ -44,10 +48,9 @@
         {
             var assemblies = args.Path switch
             {
-                "massacres" => await AssemblyLoader.LoadAssembliesAsync(new[] {"Client.Massacre.dll"}),
                 _ => Array.Empty<Assembly>()
                 };
-            _lazyLoadedAssemblies.AddRange(assemblies);
+            _additionalAssemblies.AddRange(assemblies);
         }
         catch (Exception ex)
         {

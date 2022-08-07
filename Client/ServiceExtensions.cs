@@ -1,22 +1,20 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using UnitedSystemsCooperative.Web.Client.Interfaces;
-using UnitedSystemsCooperative.Web.Client.LazyServices;
-using UnitedSystemsCooperative.Web.Client.Services;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using UnitedSystemsCooperative.Web.Client.About;
+using UnitedSystemsCooperative.Web.Client.Massacre;
 using UnitedSystemsCooperative.Web.Shared;
 using UnitedSystemsCooperative.Web.Client.Models.Options;
+using UnitedSystemsCooperative.Web.Client.Shared;
+using UnitedSystemsCooperative.Web.Client.Shared.Interfaces;
+using UnitedSystemsCooperative.Web.Client.Shared.Models;
+using UnitedSystemsCooperative.Web.Client.Shared.Services;
 
 namespace UnitedSystemsCooperative.Web.Client;
 
 public static class ServiceExtensions
 {
-    public static void AddConfigs(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.Configure<LinkOptions>(configuration.GetSection(LinkOptions.SettingsName));
-        services.Configure<AboutOptions>(configuration.GetSection(AboutOptions.SettingsName));
-        services.Configure<InformationOptions>(configuration.GetSection(InformationOptions.SettingsName));
-    }
-
-    public static void AddHttpClients(this IServiceCollection services, string baseAddress)
+    public static IServiceCollection AddHttpClients(this IServiceCollection services, string baseAddress)
     {
         services.AddHttpClient(Constants.NoAuthHttpClientName,
             client => client.BaseAddress = new Uri(baseAddress));
@@ -24,9 +22,28 @@ public static class ServiceExtensions
         services.AddHttpClient(Constants.DefaultHttpClientName,
                 client => client.BaseAddress = new Uri(baseAddress))
             .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+        return services;
     }
 
-    public static void AddServices(this IServiceCollection services, IConfiguration configuration)
+    public static async Task AddConfigs(
+        this IServiceCollection services,
+        WebAssemblyHostConfiguration configuration)
+    {
+        services.Configure<LinkOptions>(configuration.GetSection(LinkOptions.SettingsName));
+
+        var http = services.BuildServiceProvider().GetRequiredService<IHttpClientFactory>()
+            .CreateClient(Constants.NoAuthHttpClientName);
+
+        await using var aboutStream = await http.GetStreamAsync("_content/Client.About/data.json");
+        configuration.AddJsonStream(aboutStream);
+        services.Configure<AboutOptions>(configuration.GetSection(AboutOptions.SettingsName));
+
+        // await using var informationStream = await http.GetStreamAsync("_content/Client.Information/data.json");
+        // services.Configure<InformationOptions>(configuration.GetSection(InformationOptions.SettingsName));
+    }
+
+    public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMsalAuthentication(options =>
         {
@@ -43,7 +60,9 @@ public static class ServiceExtensions
         services.AddScoped<IItemService<FleetCarrier>, FleetCarrierService>();
         services.AddScoped<IItemService<FactionSystem>, SystemService>();
 
-        // Lazy Loaded Services
-        services.AddScoped<MassacreServiceFactory>();
+        // External Services
+        services.AddScoped<IMassacreService, MassacreService>();
+
+        return services;
     }
 }

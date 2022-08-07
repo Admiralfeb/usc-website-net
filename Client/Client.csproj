@@ -11,9 +11,9 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="6.0.7" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-        <PackageReference Include="MudBlazor" Version="6.0.14" />
     </ItemGroup>
 
     <ItemGroup>
@@ -21,18 +21,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Client.LazyServices\Client.LazyServices.csproj"/>
+        <ProjectReference Include="..\Client.About\Client.About.csproj"/>
+        <ProjectReference Include="..\Client.Information\Client.Information.csproj"/>
         <ProjectReference Include="..\Client.Massacre\Client.Massacre.csproj"/>
         <ProjectReference Include="..\Client.Shared\Client.Shared.csproj"/>
         <ProjectReference Include="..\Shared\Shared.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <BlazorWebAssemblyLazyLoad Include="Client.Massacre.dll"/>
+        <Folder Include="Pages\About"/>
     </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Modules\Massacre"/>
-    </ItemGroup>
-
 </Project>
