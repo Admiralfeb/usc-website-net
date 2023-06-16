@@ -1,0 +1,26 @@
+@page "/join/guest"
+@using UnitedSystemsCooperative.Web.Shared.JoinRequests
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudText Typo="Typo.h3" Align="Align.Center">Join as a Guest</MudText>
+    <MudPaper Class="pa-2">
+        <EditForm EditContext="@_editContext" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator/>
+
+            @* Cmdr Name *@
+            <JoinCmdrQuestion TItem="GuestJoinRequest" model="@model"/>
+            @* Discord Name *@
+            <JoinDiscordQuestion TItem="GuestJoinRequest" model="@model"/>
+            @* Platform *@
+            <JoinPlatformQuestion TItem="GuestJoinRequest" model="@model"/>
+            @* Referral *@
+            <JoinReferralQuestion TItem="GuestJoinRequest" model="@model"/>
+            @* Region *@
+            <JoinRegionQuestion TItem="GuestJoinRequest" model="@model"/>
+            @* Rules *@
+            <JoinRulesQuestion TItem="GuestJoinRequest" model="@model"/>
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary">Submit</MudButton>
+        </EditForm>
+    </MudPaper>
+</MudContainer>

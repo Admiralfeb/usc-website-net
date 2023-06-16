@@ -1,0 +1,23 @@
+@typeparam TItem where TItem : UnitedSystemsCooperative.Web.Shared.JoinRequests.JoinRequestBase
+@using UnitedSystemsCooperative.Web.Shared
+@implements UnitedSystemsCooperative.Web.Client.Interfaces.IJoinQuestion<TItem>
+
+<JoinQuestionBox Question="Which platform do you primarily play on?">
+    <MudRadioGroup @bind-SelectedOption="model.Platform" For="@(() => model.Platform)" Class="text-center">
+        @foreach (PlatformType item in Enum.GetValues(typeof(PlatformType)))
+        {
+            if (item.Equals(PlatformType.Unknown))
+                continue;
+
+            <MudRadio Option="item" Color="Color.Primary">@item.ToDescriptionString()</MudRadio>
+        }
+    </MudRadioGroup>
+    <ValidationMessage For="@(() => model.Platform)"></ValidationMessage>
+</JoinQuestionBox>
+
+@code {
+
+    [Parameter]
+    public TItem? model { get; set; }
+
+}

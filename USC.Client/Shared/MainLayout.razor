@@ -1,0 +1,42 @@
+﻿@using UnitedSystemsCooperative.Web.Client.Models.Options
+@using UnitedSystemsCooperative.Web.Client.Modules.About.Components
+@using Microsoft.Extensions.Options
+@inherits LayoutComponentBase
+@inject IOptions<LinkOptions> Links
+
+<MudThemeProvider IsDarkMode="true" Theme="_theme"/>
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Color="Color.Dark" DisableGutters="true">
+                <MudToolBar>
+                    @foreach (var navItem in NavItems)
+                    {
+                        <div class="mr-1">
+                            <MudNavLink Href="@navItem.To" Match="NavLinkMatch.Prefix" Class="full-nav-link">
+                                @navItem.Text
+                            </MudNavLink>
+                        </div>
+                    }
+                </MudToolBar>
+            </MudAppBar>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-2">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    readonly MudTheme _theme = UscTheme.Theme;
+
+    private NavItem[] NavItems { get; set; } = Array.Empty<NavItem>();
+
+    protected override void OnInitialized()
+    {
+        NavItems = Links.Value.NavItems;
+        base.OnInitialized();
+    }
+
+}

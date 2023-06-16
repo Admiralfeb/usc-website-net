@@ -1,0 +1,31 @@
+@page "/join/ambassador"
+@using Microsoft.AspNetCore.Components
+@using UnitedSystemsCooperative.Web.Shared.JoinRequests
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudText Typo="Typo.h3" Align="Align.Center">Join as an Ambassador</MudText>
+    <MudPaper Class="pa-2">
+        <EditForm EditContext="@_editContext" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator/>
+
+            @* Cmdr Name *@
+            <JoinCmdrQuestion TItem="AmbassadorJoinRequest" model="@model"/>
+            @* Discord Name *@
+            <JoinDiscordQuestion TItem="AmbassadorJoinRequest" model="@model"/>
+            @* Platform *@
+            <JoinPlatformQuestion TItem="AmbassadorJoinRequest" model="@model"/>
+            @* Faction *@
+            <JoinTextQuestionBox Question="What faction/group do you represent?" Label="Group" @bind-Value="model.Group" ValidationFor="@(() => model.Group)"/>
+            @* Need Command *@
+            <JoinQuestionBox Question="Do you have private information to discuss with High Command?">
+                <MudCheckBox @bind-Checked="model.NeedPrivate" Color="Color.Primary" Label="Yes"/>
+            </JoinQuestionBox>
+            @* Region *@
+            <JoinRegionQuestion TItem="AmbassadorJoinRequest" model="@model"/>
+            @* Rules *@
+            <JoinRulesQuestion TItem="AmbassadorJoinRequest" model="@model"/>
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary">Submit</MudButton>
+        </EditForm>
+    </MudPaper>
+</MudContainer>

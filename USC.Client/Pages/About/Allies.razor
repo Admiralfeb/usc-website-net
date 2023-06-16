@@ -1,0 +1,59 @@
+@page "/about/allies"
+@using UnitedSystemsCooperative.Web.Shared
+@using UnitedSystemsCooperative.Web.Client.Interfaces
+@inject IItemService<Ally> Service
+@inject ILogger<Allies> Logger
+
+<MudContainer MaxWidth="MaxWidth.ExtraSmall">
+    <MudText Typo="Typo.h4" Align="Align.Center">Allies</MudText>
+    @if (_isLoading)
+    {
+        <div>Loading allies</div>
+    }
+    else
+    {
+            @if (_areAlliesLoaded)
+            {
+        <MudPaper>
+                @if (!_allies.Any())
+                {
+                    <div>No allies found</div>
+                }
+                else
+                {
+                    <MudList>
+                        @foreach (var ally in _allies)
+                        {
+                            <MudListItem Text="@ally.Name"/>
+                        }
+                    </MudList>
+                }
+        </MudPaper>
+            }
+    }
+
+</MudContainer>
+
+@code {
+    private bool _isLoading;
+    private bool _areAlliesLoaded = false;
+    private Ally[] _allies = Array.Empty<Ally>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Logger.LogInformation("On Initialized");
+        _allies = Service.GetFromStore().ToArray();
+        try
+        {
+            if (!_areAlliesLoaded)
+                _isLoading = true;
+            _allies = (await Service.GetFromServer()).ToArray();
+        }
+        finally
+        {
+            _isLoading = false;
+            _areAlliesLoaded = true;
+        }
+    }
+
+}

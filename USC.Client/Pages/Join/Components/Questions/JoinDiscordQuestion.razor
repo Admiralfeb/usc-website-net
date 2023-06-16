@@ -1,0 +1,12 @@
+@typeparam TItem where TItem : UnitedSystemsCooperative.Web.Shared.JoinRequests.JoinRequestBase
+@implements UnitedSystemsCooperative.Web.Client.Interfaces.IJoinQuestion<TItem>
+
+<JoinTextQuestionBox Question="Please enter your discord name in format: {username}#0000" Label="Discord Name" @bind-Value="model.DiscordName" ValidationFor="@(() => model.DiscordName)"/>
+
+
+@code {
+
+    [Parameter]
+    public TItem? model { get; set; }
+
+}

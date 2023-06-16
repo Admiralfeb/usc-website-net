@@ -1,0 +1,15 @@
+<div class="text-center">
+    @if (Title != null)
+    {
+        <MudText Typo="Typo.h2">@Title</MudText>
+    }
+    <MudText Typo="Typo.h3">Under Construction</MudText>
+    <img src="img/construction.png" style="max-width: 400px;" alt="Under Construction cone"/>
+</div>
+
+@code {
+
+    [Parameter]
+    public string? Title { get; set; }
+
+}

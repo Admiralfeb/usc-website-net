@@ -1,0 +1,15 @@
+@typeparam TItem where TItem : UnitedSystemsCooperative.Web.Shared.JoinRequests.JoinRequestBase
+@implements UnitedSystemsCooperative.Web.Client.Interfaces.IJoinQuestion<TItem>
+
+<JoinQuestionBox>
+    <MudText>Do you agree to follow our <MudLink Href="/about/rules" Target="_blank">rules</MudLink>?</MudText>
+    <MudCheckBox @bind-Checked="model.AcceptsRules" Color="Color.Primary" Label="Accept Rules"/>
+    <ValidationMessage For="@(() => model.AcceptsRules)"/>
+</JoinQuestionBox>
+
+@code {
+
+    [Parameter]
+    public TItem? model { get; set; }
+
+}

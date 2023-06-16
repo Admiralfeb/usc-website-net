@@ -1,0 +1,27 @@
+﻿@page "/home"
+
+<PageTitle>USC | Home</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="Typo.h3" Class="text-center">@HeaderText</MudText>
+    <UscPaper Class="pa-2 text-center">
+
+        <MudText Class="ma-1 mb-3">
+            @PgText
+        </MudText>
+        <div class="latin">
+            <MudText Class="latin-text" Typo="Typo.h4" Style="font-family: Cinzel, serif;">@LatinText.ToUpper()</MudText>
+            <MudText Style="flex: 0 0;" Typo="Typo.subtitle2">@LatinTranslation</MudText>
+        </div>
+        <MudImage Src="/img/uscLogo.png" Alt="USC Logo" Style="width: 100%; padding: 0; object-fit: scale-down; max-height: 700px"/>
+    </UscPaper>
+</MudContainer>
+
+@code{
+
+        private const string HeaderText = "United Systems Cooperative";
+        private const string PgText = "Established in 3306, the United Systems Cooperative is a tight-knit organization of independent pilots operating across the galaxy, both in human space, and the uncharted sectors beyond. Little is known about this groups motives and plans, though many conflicting reports are offered by systems across inhabited space. The one thing the reports agree on is that members of this group are fiercely loyal to one another, and to the organization as a whole. The United Systems Cooperative seeks to create a family where everyone is welcome, no matter their background, their allegiances, etc. To create a family where everyone can get the help they need, make lasting friendships, and have new brothers and sisters to fly with them through the black!";
+        private const string LatinText = "Ad astra per aspera";
+        private const string LatinTranslation = "Through hardships to the stars";
+
+}

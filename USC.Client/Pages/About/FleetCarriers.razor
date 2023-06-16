@@ -1,0 +1,41 @@
+@page "/about/fc"
+@using UnitedSystemsCooperative.Web.Shared
+@using UnitedSystemsCooperative.Web.Client.Interfaces
+@inject IItemService<FleetCarrier> Service
+
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <FCSquad Carriers="@_squadCarriers" IsLoading="@isLoading"/>
+    <FCPersonal Carriers="_personalCarriers" IsLoading="@isLoading"/>
+</MudContainer>
+
+@code {
+    private bool isLoading = false;
+    private FleetCarrier[]? _fleetCarriers;
+    private FleetCarrier[] _personalCarriers = Array.Empty<FleetCarrier>();
+    private FleetCarrier[] _squadCarriers = Array.Empty<FleetCarrier>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _fleetCarriers = Service.GetFromStore().ToArray();
+        try
+        {
+            if(_fleetCarriers == null)
+                isLoading = true;
+
+            _fleetCarriers = (await Service.GetFromServer()).ToArray();
+            _personalCarriers = _fleetCarriers
+                .Where(x => string.IsNullOrEmpty(x.Purpose))
+                .OrderBy(x => x.Name)
+                .ToArray();
+            _squadCarriers = _fleetCarriers
+                .Where(x => !string.IsNullOrEmpty(x.Purpose))
+                .OrderBy(x => x.Name)
+                .ToArray();
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+}

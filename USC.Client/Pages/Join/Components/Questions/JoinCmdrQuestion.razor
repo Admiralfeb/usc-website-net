@@ -1,0 +1,11 @@
+@typeparam TItem where TItem : UnitedSystemsCooperative.Web.Shared.JoinRequests.JoinRequestBase
+@implements UnitedSystemsCooperative.Web.Client.Interfaces.IJoinQuestion<TItem>
+
+<JoinTextQuestionBox Question="Please enter your in-game CMDR name" Label="CMDR Name" @bind-Value="model.CmdrName" ValidationFor="@(() => model.CmdrName)"/>
+
+@code {
+
+    [Parameter]
+    public TItem? model { get; set; }
+
+}

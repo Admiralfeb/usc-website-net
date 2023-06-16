@@ -1,0 +1,24 @@
+@typeparam TItem where TItem : UnitedSystemsCooperative.Web.Shared.JoinRequests.JoinRequestBase
+@using UnitedSystemsCooperative.Web.Shared.JoinRequests
+@using UnitedSystemsCooperative.Web.Shared
+@implements UnitedSystemsCooperative.Web.Client.Interfaces.IJoinQuestion<TItem>
+
+<JoinQuestionBox Question="Which region are you in?">
+    <MudRadioGroup @bind-SelectedOption="model.Region" For="@(() => model.Region)" Class="text-center px-2">
+        @foreach (RegionType item in Enum.GetValues(typeof(RegionType)))
+        {
+            if (item.Equals(RegionType.Unknown))
+                continue;
+
+            <MudRadio Option="item" Color="Color.Primary">@item.ToDescriptionString()</MudRadio>
+        }
+    </MudRadioGroup>
+    <ValidationMessage For="@(() => model.Region)"/>
+</JoinQuestionBox>
+
+@code {
+
+    [Parameter]
+    public TItem? model { get; set; }
+
+}

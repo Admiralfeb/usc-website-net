@@ -1,0 +1,57 @@
+@typeparam TItem where TItem : UnitedSystemsCooperative.Web.Shared.Interfaces.IJoinRequestReferral
+@using Microsoft.AspNetCore.Components
+@using UnitedSystemsCooperative.Web.Shared
+@using UnitedSystemsCooperative.Web.Shared.JoinRequests
+@implements IDisposable
+
+<JoinQuestionBox Question="How did you find us?">
+    <MudSelect @bind-Value="model.Referral" Label="Select" AnchorOrigin="Origin.BottomCenter" Strict="true" For="@(() => model.Referral)">
+        @foreach (ReferralType item in Enum.GetValues(typeof(ReferralType)))
+        {
+            if (item.Equals(ReferralType.Unknown))
+                continue;
+
+            <MudSelectItem Value="item">@item.ToDescriptionString()</MudSelectItem>
+        }
+    </MudSelect>
+    <ValidationMessage For="@(() => model.Referral)"></ValidationMessage>
+    @if (!string.IsNullOrEmpty(_referralQuestion))
+    {
+        <MudText Class="mt-2">@_referralQuestion</MudText>
+        <MudTextField T="string" Label="Explain" @bind-value="model.ReferralDescribe" For="@(() => model.ReferralDescribe)"/>
+    }
+</JoinQuestionBox>
+
+@code {
+
+    [CascadingParameter]
+    public EditContext? EditContext { get; set; }
+
+    [Parameter]
+    public TItem model { get; set; }
+
+    private string _referralQuestion = string.Empty;
+
+
+    protected override void OnInitialized()
+    {
+        EditContext.OnFieldChanged += OnFieldChange;
+    }
+
+    private void OnFieldChange(object? sender, FieldChangedEventArgs e)
+    {
+        if (e.FieldIdentifier.FieldName != nameof(model.Referral)) return;
+        _referralQuestion = model.Referral switch
+        {
+            ReferralType.Player => "Which player referred you?",
+            ReferralType.Other => "Please explain",
+            _ => string.Empty
+            };
+    }
+
+    public void Dispose()
+    {
+        EditContext.OnFieldChanged -= OnFieldChange;
+    }
+
+}

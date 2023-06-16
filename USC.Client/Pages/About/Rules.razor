@@ -1,0 +1,62 @@
+@page "/about/rules"
+@using UnitedSystemsCooperative.Web.Client.Models
+@using Microsoft.Extensions.Options
+@using UnitedSystemsCooperative.Web.Client.Models.Options
+@inject IOptions<AboutOptions> AboutSettings
+
+<PageTitle>USC | Rules</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Align="Align.Center" Typo="Typo.h3" Class="mb-2">Rules</MudText>
+    <MudPaper Style="flex-grow: 1" Class="pa-2">
+        <MudGrid Spacing="1">
+            <MudItem xs="4">
+                <div class="rule-box">
+                    <MudText Typo="Typo.h5" Align="Align.Center">Discord</MudText>
+                    @if (_discordRules != null)
+                    {
+                        <MudList>
+                            @{ var i = 1; }
+                            @foreach (var rule in _discordRules)
+                            {
+                                <MudListItem Text="@($"{i}) {rule}")"/>
+                                i++;
+                            }
+                        </MudList>
+                    }
+                </div>
+            </MudItem>
+            <MudItem xs="8">
+                <div class="rule-box">
+                    <MudText Typo="Typo.h5" Align="Align.Center">Members of USC</MudText>
+                    @if (_memberRules != null)
+                    {
+                        <MudList>
+                            @{ var i = 1; }
+                            @foreach (var rule in _memberRules)
+                            {
+                                <MudListItem Text="@($"{i}) {rule}")"/>
+                                i++;
+                            }
+                        </MudList>
+                    }
+                </div>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+</MudContainer>
+
+@code {
+
+    private string[]? _discordRules;
+    private string[]? _memberRules;
+
+    protected override void OnInitialized()
+    {
+        var rules = AboutSettings.Value.Rules;
+        _discordRules = rules!.Discord;
+        _memberRules = rules.Member;
+        base.OnInitialized();
+    }
+
+}

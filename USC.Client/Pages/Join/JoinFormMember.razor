@@ -1,0 +1,40 @@
+@page "/join/member"
+@using UnitedSystemsCooperative.Web.Shared.JoinRequests
+@using UnitedSystemsCooperative.Web.Shared
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudText Typo="Typo.h3" Align="Align.Center">Join as a Member</MudText>
+    <MudPaper Class="pa-2">
+        <EditForm EditContext="@_editContext" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator/>
+
+            @* Cmdr Name *@
+            <JoinCmdrQuestion TItem="MemberJoinRequest" model="@model"/>
+            @* Discord Name *@
+            <JoinDiscordQuestion TItem="MemberJoinRequest" model="@model"/>
+            @* Platform *@
+            <JoinPlatformQuestion TItem="MemberJoinRequest" model="@model"/>
+            @* Playing Length *@
+            <JoinQuestionBox Question="How long have you been playing?">
+                <MudRadioGroup @bind-SelectedOption="model.PlayingLength" For="@(() => model.PlayingLength)" Class="text-center">
+                    @foreach (PlayingLengthType item in Enum.GetValues(typeof(PlayingLengthType)))
+                    {
+                        if (item.Equals(PlayingLengthType.Unknown))
+                            continue;
+
+                        <MudRadio Option="item" Color="Color.Primary">@item.ToDescriptionString()</MudRadio>
+                    }
+                </MudRadioGroup>
+                <ValidationMessage For="@(() => model.PlayingLength)"></ValidationMessage>
+            </JoinQuestionBox>
+            @* Referral *@
+            <JoinReferralQuestion TItem="MemberJoinRequest" model="@model"/>
+            @* Region *@
+            <JoinRegionQuestion TItem="MemberJoinRequest" model="@model"/>
+            @* Rules *@
+            <JoinRulesQuestion TItem="MemberJoinRequest" model="@model"/>
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary">Submit</MudButton>
+        </EditForm>
+    </MudPaper>
+</MudContainer>

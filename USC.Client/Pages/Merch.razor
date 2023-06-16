@@ -1,0 +1,32 @@
+@page "/merch"
+@using UnitedSystemsCooperative.Web.Client.Services
+@inject UrlService UrlService
+
+<PageTitle>USC | Merch</PageTitle>
+
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudText Typo="Typo.h3" Align="Align.Center">USC Merch Store</MudText>
+    <PaperP1>
+        <div class="text-center">
+            <MudText>Click the image or the link below to open the merch store.</MudText>
+            <a href="@_merchUrl" target="_blank" rel="noreferrer">
+                <img style="width: 100%;" src="/img/expansion.png" alt="expansion image"/>
+            </a>
+            <MudLink Href="@_merchUrl" Target="_blank">
+                <MudText>Go to Merch Store</MudText>
+            </MudLink>
+        </div>
+    </PaperP1>
+</MudContainer>
+
+@code {
+
+    private string _merchUrl = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _merchUrl = UrlService.GetUscLinkByKey("MerchStore");
+    }
+
+}

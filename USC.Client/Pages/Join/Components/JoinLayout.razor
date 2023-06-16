@@ -1,0 +1,16 @@
+@inherits LayoutComponentBase
+@layout MainLayout
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudText Typo="Typo.h3" Align="Align.Center">Join Us</MudText>
+    <MudPaper Class="ma-auto pa-1 d-flex align-center flex-column flex-grow-1">
+        <MudText Align="Align.Center">Welcome to USC. Please select how you'd like to join us below.</MudText>
+        <div class="d-flex justify-space-around flex-grow-1 gap-5">
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Link="/join/member">Member</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Link="/join/guest">Guest</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Link="/join/ambassador">Ambassador</MudButton>
+        </div>
+    </MudPaper>
+</MudContainer>
+
+@Body
