@@ -12,8 +12,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\USC.Client\USC.Client.csproj" />
-		<ProjectReference Include="..\USC.Shared\USC.Shared.csproj" />
+		<ProjectReference Include="..\Client\Client.csproj" />
+		<ProjectReference Include="..\Shared\Shared.csproj" />
 	</ItemGroup>
 
 
